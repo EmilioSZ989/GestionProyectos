@@ -1,10 +1,14 @@
 package com.example.facturaPOS.controller;
 
-import com.example.facturaPOS.model.EstadoPedido;
-import com.example.facturaPOS.model.Pedido;
-import com.example.facturaPOS.service.EstadoPedidoService;
-import com.example.facturaPOS.service.PedidoService;
+import com.example.facturaPOS.model.Factura;
+import com.example.facturaPOS.model.Pago;
+import com.example.facturaPOS.model.TipoPago;
+import com.example.facturaPOS.repository.PagoRepository;
+import com.example.facturaPOS.repository.FacturaRepository;
+import com.example.facturaPOS.repository.TipoPagoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -15,36 +19,57 @@ import java.util.Optional;
 public class PaymentController {
 
     @Autowired
-    private PedidoService pedidoService;
+    private PagoRepository pagoRepository;
 
     @Autowired
-    private EstadoPedidoService estadoPedidoService;  // Inyectar EstadoPedidoService
+    private FacturaRepository facturaRepository;
 
-    /*@PostMapping("/process/{id}")
-    public String processPayment(@PathVariable Integer id, @RequestParam("paymentMethod") String paymentMethod, @RequestParam("amount") BigDecimal amount) {
-        Optional<Pedido> optionalPedido = pedidoService.findById(id);
-        if (optionalPedido.isPresent()) {
-            Pedido pedido = optionalPedido.get();
-            if (paymentMethod.equals("cash")) {
-                BigDecimal change = amount.subtract(pedido.getTotal());
-                // Lógica para manejar el pago en efectivo y el cambio
-            } else if (paymentMethod.equals("card")) {
-                // Lógica para manejar el pago con tarjeta
-            }
+    @Autowired
+    private TipoPagoRepository tipoPagoRepository;
 
-            // Buscar el estado "paid" en la base de datos
-            Optional<EstadoPedido> optionalEstadoPago = estadoPedidoService.findByEstado("paid");
-            if (optionalEstadoPago.isPresent()) {
-                EstadoPedido estadoPago = optionalEstadoPago.get();
-                pedido.setEstadoPedido(estadoPago);
-                pedidoService.savePedido(pedido);
-                return "Payment processed successfully!";
+    @PostMapping("/create")
+    public ResponseEntity<Pago> createPayment(
+            @RequestParam Integer facturaId,
+            @RequestParam Integer tipoPagoId,
+            @RequestParam BigDecimal cantidadRecibida) {
+
+        Optional<Factura> facturaOptional = facturaRepository.findById(facturaId);
+        Optional<TipoPago> tipoPagoOptional = tipoPagoRepository.findById(tipoPagoId);
+
+        if (facturaOptional.isPresent() && tipoPagoOptional.isPresent()) {
+            Factura factura = facturaOptional.get();
+            TipoPago tipoPago = tipoPagoOptional.get();
+
+            BigDecimal subtotal = factura.getPedido().getSubtotal();
+            BigDecimal propina = factura.getPedido().getPropina();
+            BigDecimal iva = factura.getPedido().getIVA();
+
+            if (subtotal == null) subtotal = BigDecimal.ZERO;
+            if (propina == null) propina = BigDecimal.ZERO;
+            if (iva == null) iva = BigDecimal.ZERO;
+
+            BigDecimal totalFactura = subtotal.add(propina).add(iva);
+
+            BigDecimal cambio;
+            if (cantidadRecibida != null && totalFactura != null) {
+                cambio = cantidadRecibida.subtract(totalFactura);
             } else {
-                return "Payment state 'paid' not found!";
+                cambio = BigDecimal.ZERO; // Manejar la situación donde cantidadRecibida o totalFactura es nulo
             }
+
+            Pago pago = new Pago();
+            pago.setFactura(factura);
+            pago.setTipoPago(tipoPago);
+            pago.setCantidadRecibida(cantidadRecibida);
+            pago.setCambio(cambio);
+
+            Pago savedPago = pagoRepository.save(pago);
+
+            return ResponseEntity.ok(savedPago);
         } else {
-            return "Pedido not found!";
+            return ResponseEntity.badRequest().build();
         }
-    }*/
+    }
+
 }
 
