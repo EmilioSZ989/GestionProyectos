@@ -1,0 +1,25 @@
+<button type="button" class="btn btn-primary btn-lg" (click)="AbrirFormulario()">Acceder</button>
+
+<div class="modal" tabindex="-1" id = formulario-login>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ingrese sus credenciales</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cerrarFormulario()"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Correo </label>
+              </div>
+              <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Contraseña</label>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Ingresar</button>
+        </div>
+      </div>
+    </div>
+  </div>
