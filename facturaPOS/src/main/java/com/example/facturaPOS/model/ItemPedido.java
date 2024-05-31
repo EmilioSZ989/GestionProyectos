@@ -1,7 +1,14 @@
 package com.example.facturaPOS.model;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ItemPedido")
@@ -9,35 +16,32 @@ public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idItemPedido;
+    private Long idItemPedido;
 
-    private Integer cantidad;
-
-    @Column(precision = 10, scale = 2)
+    private int cantidad;
     private BigDecimal precioPorCantidad;
 
     @ManyToOne
-    @JoinColumn(name = "id_pedido", nullable = false)
+    @JoinColumn(name = "id_pedido")
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "id_menu", nullable = false)
-    private Menu menu;
+    @JoinColumn(name = "id_item_menu")
+    private ItemMenu itemMenu;
 
-    
-	public Integer getIdItemPedido() {
+	public Long getIdItemPedido() {
 		return idItemPedido;
 	}
 
-	public void setIdItemPedido(Integer idItemPedido) {
+	public void setIdItemPedido(Long idItemPedido) {
 		this.idItemPedido = idItemPedido;
 	}
 
-	public Integer getCantidad() {
+	public int getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(Integer cantidad) {
+	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
 
@@ -57,12 +61,12 @@ public class ItemPedido {
 		this.pedido = pedido;
 	}
 
-	public Menu getMenu() {
-		return menu;
+	public ItemMenu getItemMenu() {
+		return itemMenu;
 	}
 
-	public void setMenu(Menu menu) {
-		this.menu = menu;
+	public void setItemMenu(ItemMenu itemMenu) {
+		this.itemMenu = itemMenu;
 	}
 
     

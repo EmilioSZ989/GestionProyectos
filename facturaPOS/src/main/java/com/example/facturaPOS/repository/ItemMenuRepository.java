@@ -1,8 +1,10 @@
 package com.example.facturaPOS.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import com.example.facturaPOS.model.Menu;
+import com.example.facturaPOS.model.ItemMenu;
 
-public interface ItemMenuRepository extends JpaRepository<Menu, Integer> {
+@Repository
+public interface ItemMenuRepository extends JpaRepository<ItemMenu, Long> {
 }

@@ -1,6 +1,12 @@
 package com.example.facturaPOS.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Usuario")
@@ -8,31 +14,22 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
+    private Long idUsuario;
 
-    @Column(length = 50)
     private String nombreUsuario;
-
-    @Column(length = 50)
     private String apellidoUsuario;
-
-    @Column(nullable = false, length = 29)
     private String correo;
-
-    @Column(nullable = false, length = 19)
-    private String contraseña;
+    private String contrasena;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_usuario", nullable = false)
+    @JoinColumn(name = "id_tipo_usuario")
     private TipoUsuario tipoUsuario;
-    
-    
 
-	public Integer getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -60,12 +57,12 @@ public class Usuario {
 		this.correo = correo;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContrasena() {
+		return contrasena;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
 	}
 
 	public TipoUsuario getTipoUsuario() {

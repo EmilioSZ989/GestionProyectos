@@ -1,6 +1,10 @@
 package com.example.facturaPOS.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TipoUsuario")
@@ -8,18 +12,15 @@ public class TipoUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipoUsuario;
+    private Long idTipoUsuario;
 
-    @Column(nullable = false, length = 14)
     private String tipoUsuario;
-    
-    
 
-	public Integer getIdTipoUsuario() {
+	public Long getIdTipoUsuario() {
 		return idTipoUsuario;
 	}
 
-	public void setIdTipoUsuario(Integer idTipoUsuario) {
+	public void setIdTipoUsuario(Long idTipoUsuario) {
 		this.idTipoUsuario = idTipoUsuario;
 	}
 

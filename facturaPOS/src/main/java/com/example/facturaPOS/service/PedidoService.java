@@ -1,24 +1,26 @@
 package com.example.facturaPOS.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.facturaPOS.model.EstadoMesa;
+import com.example.facturaPOS.model.EstadoPedido;
+import com.example.facturaPOS.model.ItemMenu;
 import com.example.facturaPOS.model.ItemPedido;
-import com.example.facturaPOS.model.Menu;
 import com.example.facturaPOS.model.Mesa;
 import com.example.facturaPOS.model.Pedido;
-import com.example.facturaPOS.repository.ClienteRepository;
-import com.example.facturaPOS.repository.EstadoPedidoRepository;
+import com.example.facturaPOS.repository.EstadoMesaRepository;
 import com.example.facturaPOS.repository.ItemMenuRepository;
 import com.example.facturaPOS.repository.ItemPedidoRepository;
 import com.example.facturaPOS.repository.MesaRepository;
 import com.example.facturaPOS.repository.PedidoRepository;
-import com.example.facturaPOS.repository.UsuarioRepository;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class PedidoService {
@@ -27,89 +29,109 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
 
     @Autowired
-    private ItemPedidoRepository itemPedidoRepository;
-
-    @Autowired
     private ItemMenuRepository itemMenuRepository;
-
+    
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
+    private ItemPedidoRepository itemPedidoRepository;
+    
     @Autowired
     private MesaRepository mesaRepository;
+    
+    @Autowired
+    private EstadoMesaRepository estadoMesaRepository;
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ConfiguracionService configuracionService;  // Agregamos la inyección de ConfiguracionService
 
-    @Autowired
-    private EstadoPedidoRepository estadoPedidoRepository;
+    @Transactional
+    public Pedido crearPedido(Pedido pedido, List<ItemPedido> items, BigDecimal porcentajePropina) {
+        // Asignar fecha y hora actuales al pedido
+        pedido.setFechaPedido(LocalDate.now());
+        pedido.setHoraPedido(LocalTime.now());
 
-    public Pedido crearPedido(Pedido pedido, List<ItemPedido> itemsPedido) {
-        // Calcular el total del pedido sumando los precios de los items
-        BigDecimal totalPedido = BigDecimal.ZERO;
+        // Calcular subtotal
+        BigDecimal subtotal = BigDecimal.ZERO;
+        for (ItemPedido item : items) {
+            // Obtener el ItemMenu correspondiente al idItemMenu
+            ItemMenu itemMenu = itemMenuRepository.findById(item.getItemMenu().getIdItemMenu())
+                                .orElseThrow(() -> new IllegalArgumentException("No se encontró el ItemMenu con ID: " + item.getItemMenu().getIdItemMenu()));
 
-        for (ItemPedido itemPedido : itemsPedido) {
-            // Obtener el precio por unidad del menú utilizando el repositorio de ItemMenuRepository
-            Optional<Menu> optionalMenu = itemMenuRepository.findById(itemPedido.getMenu().getIdMenu());
-            if (optionalMenu.isPresent()) {
-                BigDecimal precioPorUnidad = optionalMenu.get().getPrecio();
-                BigDecimal precioPorCantidad = precioPorUnidad.multiply(BigDecimal.valueOf(itemPedido.getCantidad()));
-                itemPedido.setPrecioPorCantidad(precioPorCantidad);
-                totalPedido = totalPedido.add(precioPorCantidad);
-            } else {
-                // Manejar el caso en que el menú no se encuentre en la base de datos
-                throw new NoSuchElementException("No se encontró el menú en la base de datos.");
-                // Puedes personalizar el mensaje de la excepción según tus necesidades
+            if (itemMenu.getPrecio() == null) {
+                throw new IllegalArgumentException("El precio del ItemMenu no puede ser nulo.");
             }
+
+            BigDecimal precioPorCantidad = itemMenu.getPrecio().multiply(BigDecimal.valueOf(item.getCantidad()));
+            subtotal = subtotal.add(precioPorCantidad);
+
+            // Asignar valores al ItemPedido
+            item.setPrecioPorCantidad(precioPorCantidad.setScale(2, RoundingMode.HALF_UP));
+            item.setPedido(pedido);
         }
 
-        // Calcular el IVA (asumiendo un 16% de IVA)
-        BigDecimal iva = totalPedido.multiply(new BigDecimal("0.16"));
+        // Obtener el IVA desde la configuración
+        BigDecimal ivaPorcentaje = configuracionService.obtenerIVA();
 
-        // Establecer el subtotal y el IVA en el pedido
-        pedido.setSubtotal(totalPedido);
-        pedido.setIVA(iva);
+        BigDecimal iva = subtotal.multiply(ivaPorcentaje).divide(BigDecimal.valueOf(1)); // Calcula el IVA basado en el porcentaje configurado
+        
+        // Calcular propina
+        BigDecimal propina = subtotal.multiply(porcentajePropina.divide(BigDecimal.valueOf(100))); // Calcula la propina basada en el porcentaje proporcionado
+
+        // Calcular total
+        BigDecimal total = subtotal.add(iva).add(propina);
+
+        // Asignar valores calculados al pedido
+        pedido.setSubtotal(subtotal.setScale(2, RoundingMode.HALF_UP));
+        pedido.setIva(iva.setScale(2, RoundingMode.HALF_UP));
+        pedido.setPropina(propina.setScale(2, RoundingMode.HALF_UP));
+        pedido.setTotal(total.setScale(2, RoundingMode.HALF_UP));
+        
+        // Guardar los ítems de pedido en la base de datos
+        for (ItemPedido item : items) {
+            itemPedidoRepository.save(item);
+        }
 
         // Guardar el pedido en la base de datos
-        Pedido pedidoGuardado = pedidoRepository.save(pedido);
-
-        // Cargar los datos de las claves foráneas sin cargar sus relaciones secundarias
-        pedidoGuardado.setUsuario(usuarioRepository.findById(pedidoGuardado.getUsuario().getIdUsuario()).orElse(null));
-
-        // Cargar los datos de la mesa sin cargar sus relaciones secundarias
-        Mesa mesa = mesaRepository.findById(pedidoGuardado.getMesa().getIdMesa()).orElse(null);
-        if (mesa != null) {
-            Mesa mesaReducida = new Mesa();
-            mesaReducida.setIdMesa(mesa.getIdMesa());
-            mesaReducida.setEstadoMesa(mesa.getEstadoMesa());
-            pedidoGuardado.setMesa(mesaReducida);
-        }
-
-        pedidoGuardado.setCliente(clienteRepository.findById(pedidoGuardado.getCliente().getIdCliente()).orElse(null));
-        pedidoGuardado.setEstadoPedido(estadoPedidoRepository.findById(pedidoGuardado.getEstadoPedido().getIdEstadoPedido()).orElse(null));
-
-        // Asociar cada item al pedido y guardarlos en la base de datos
-        for (ItemPedido itemPedido : itemsPedido) {
-            itemPedido.setPedido(pedidoGuardado);
-            itemPedidoRepository.save(itemPedido);
-        }
-
-        return pedidoGuardado;
+        return pedidoRepository.save(pedido);
     }
 
 
-    public boolean calculateAndSaveTip(Integer idPedido, Float tipPercentage) {
-        Optional<Pedido> optionalPedido = pedidoRepository.findById(idPedido);
-        if (optionalPedido.isPresent()) {
-            Pedido pedido = optionalPedido.get();
-            BigDecimal subtotal = pedido.getSubtotal();
-            BigDecimal tipAmount = subtotal.multiply(BigDecimal.valueOf(tipPercentage / 100));
-            pedido.setPropina(tipAmount);
-            pedido.setSubtotal(subtotal);
-            pedidoRepository.save(pedido);
-            return true;
-        } else {
-            return false;
+    
+    public List<Pedido> obtenerTodosLosPedidos() {
+        return pedidoRepository.findAll();
+    }
+
+    public void actualizarEstadoPedido(Long idPedido, EstadoPedido estadoPedido) {
+        Pedido pedido = pedidoRepository.findById(idPedido)
+            .orElseThrow(() -> new RuntimeException("Pedido no encontrado con el ID: " + idPedido));
+        pedido.setEstadoPedido(estadoPedido);
+        pedidoRepository.save(pedido);
+    }
+    
+    public void asignarPedidoAMesa(Long idPedido, Long idMesa) {
+        // Buscamos el pedido por su ID
+        Pedido pedido = pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con el ID: " + idPedido));
+        
+        // Buscamos la mesa por su ID
+        Mesa mesa = mesaRepository.findById(idMesa)
+                .orElseThrow(() -> new RuntimeException("Mesa no encontrada con el ID: " + idMesa));
+        
+        // Verificamos que la mesa esté disponible
+        if (mesa.getEstadoMesa().getIdEstadoMesa() == 2) {
+            throw new RuntimeException("La mesa con ID " + idMesa + " no está disponible.");
         }
+        
+        // Asignamos la mesa al pedido
+        pedido.setMesa(mesa);
+        
+        // Cambiamos el estado de la mesa a "ocupado"
+        EstadoMesa estadoMesaOcupado = estadoMesaRepository.findById(2L)
+                .orElseThrow(() -> new RuntimeException("Estado de mesa \"ocupado\" no encontrado."));
+        mesa.setEstadoMesa(estadoMesaOcupado);
+        
+        // Guardamos el pedido actualizado en la base de datos
+        pedidoRepository.save(pedido);
+        // Guardamos la mesa actualizada en la base de datos
+        mesaRepository.save(mesa);
     }
 }

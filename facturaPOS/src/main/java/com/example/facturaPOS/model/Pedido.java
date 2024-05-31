@@ -1,9 +1,19 @@
 package com.example.facturaPOS.model;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "Pedido")
@@ -11,66 +21,57 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPedido;
+    private Long idPedido;
 
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private LocalDate fechaPedido;
 
     @Temporal(TemporalType.TIME)
-    private Date hora;
+    private LocalTime horaPedido;
 
-    @Column(precision = 10, scale = 2)
     private BigDecimal subtotal;
-
-    @Column(precision = 10, scale = 2)
+    private BigDecimal total;
     private BigDecimal propina;
-
-    @Column(precision = 5, scale = 2)
-    private BigDecimal IVA;
+    private BigDecimal iva;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_mesa", nullable = false)
+    @JoinColumn(name = "id_mesa")
     private Mesa mesa;
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente", nullable = false)
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "id_estado_pedido", nullable = false)
+    @JoinColumn(name = "id_estado_pedido")
     private EstadoPedido estadoPedido;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ItemPedido> items;
-
-    // Getters and Setters
-
-	public Integer getIdPedido() {
+	public Long getIdPedido() {
 		return idPedido;
 	}
 
-	public void setIdPedido(Integer idPedido) {
+	public void setIdPedido(Long idPedido) {
 		this.idPedido = idPedido;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public LocalDate getFechaPedido() {
+		return fechaPedido;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFechaPedido(LocalDate localDate) {
+		this.fechaPedido = localDate;
 	}
 
-	public Date getHora() {
-		return hora;
+	public LocalTime getHoraPedido() {
+		return horaPedido;
 	}
 
-	public void setHora(Date hora) {
-		this.hora = hora;
+	public void setHoraPedido(LocalTime localTime) {
+		this.horaPedido = localTime;
 	}
 
 	public BigDecimal getSubtotal() {
@@ -81,6 +82,14 @@ public class Pedido {
 		this.subtotal = subtotal;
 	}
 
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
+	}
+
 	public BigDecimal getPropina() {
 		return propina;
 	}
@@ -89,12 +98,12 @@ public class Pedido {
 		this.propina = propina;
 	}
 
-	public BigDecimal getIVA() {
-		return IVA;
+	public BigDecimal getIva() {
+		return iva;
 	}
 
-	public void setIVA(BigDecimal iVA) {
-		IVA = iVA;
+	public void setIva(BigDecimal iva) {
+		this.iva = iva;
 	}
 
 	public Usuario getUsuario() {
@@ -129,12 +138,5 @@ public class Pedido {
 		this.estadoPedido = estadoPedido;
 	}
 
-	public List<ItemPedido> getItems() {
-		return items;
-	}
-
-	public void setItems(List<ItemPedido> items) {
-		this.items = items;
-	}
     
 }

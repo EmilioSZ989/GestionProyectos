@@ -1,12 +1,13 @@
 package com.example.facturaPOS.service;
 
-import com.example.facturaPOS.model.Mesa;
-import com.example.facturaPOS.repository.MesaRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.facturaPOS.model.Mesa;
+import com.example.facturaPOS.repository.MesaRepository;
 
 @Service
 public class MesaService {
@@ -14,20 +15,26 @@ public class MesaService {
     @Autowired
     private MesaRepository mesaRepository;
 
-    public Mesa saveMesa(Mesa mesa) {
-        return mesaRepository.save(mesa);
-    }
-
-    public List<Mesa> findAll() {
+    public List<Mesa> obtenerTodasLasMesas() {
         return mesaRepository.findAll();
     }
 
-    public Mesa findById(Integer id) {
-        Optional<Mesa> optionalMesa = mesaRepository.findById(id);
-        return optionalMesa.orElse(null);
+    public Mesa crearMesa(Mesa mesa) {
+        return mesaRepository.save(mesa);
     }
 
-    public void deleteMesa(Integer id) {
+    public Mesa editarMesa(Long id, Mesa mesa) {
+        Optional<Mesa> mesaOptional = mesaRepository.findById(id);
+        if (mesaOptional.isPresent()) {
+            Mesa mesaExistente = mesaOptional.get();
+            mesaExistente.setEstadoMesa(mesa.getEstadoMesa());
+            return mesaRepository.save(mesaExistente);
+        } else {
+            return null;
+        }
+    }
+
+    public void eliminarMesa(Long id) {
         mesaRepository.deleteById(id);
     }
 }

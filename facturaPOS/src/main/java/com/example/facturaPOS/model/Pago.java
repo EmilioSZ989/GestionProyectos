@@ -1,7 +1,17 @@
 package com.example.facturaPOS.model;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "Pago")
@@ -9,30 +19,35 @@ public class Pago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPago;
-
-    @Column(precision = 10, scale = 2)
+    private Long idPago;
+    
+    @Temporal(TemporalType.DATE)
+    private LocalDate fechaEmision;
     private BigDecimal cantidadRecibida;
-
-    @Column(precision = 10, scale = 2)
     private BigDecimal cambio;
 
     @ManyToOne
-    @JoinColumn(name = "id_factura", nullable = false)
+    @JoinColumn(name = "id_factura")
     private Factura factura;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_pago", nullable = false)
+    @JoinColumn(name = "id_tipo_pago")
     private TipoPago tipoPago;
-    
-    
 
-	public Integer getIdPago() {
+	public Long getIdPago() {
 		return idPago;
 	}
 
-	public void setIdPago(Integer idPago) {
+	public void setIdPago(Long idPago) {
 		this.idPago = idPago;
+	}
+
+	public LocalDate getFechaEmision() {
+		return fechaEmision;
+	}
+
+	public void setFechaEmision(LocalDate fechaEmision) {
+		this.fechaEmision = fechaEmision;
 	}
 
 	public BigDecimal getCantidadRecibida() {
@@ -66,6 +81,6 @@ public class Pago {
 	public void setTipoPago(TipoPago tipoPago) {
 		this.tipoPago = tipoPago;
 	}
-
+    
     
 }

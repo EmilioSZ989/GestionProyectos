@@ -14,39 +14,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.facturaPOS.model.Mesa;
-import com.example.facturaPOS.service.MesaService;
+import com.example.facturaPOS.model.ItemMenu;
+import com.example.facturaPOS.service.MenuService;
 
 @RestController
-@RequestMapping("/mesas")
-public class MesaController {
+@RequestMapping("/menu")
+public class MenuController {
 
     @Autowired
-    private MesaService mesaService;
+    private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<List<Mesa>> obtenerTodasLasMesas() {
-        return ResponseEntity.ok(mesaService.obtenerTodasLasMesas());
+    public ResponseEntity<List<ItemMenu>> obtenerTodosLosItems() {
+        return ResponseEntity.ok(menuService.obtenerTodosLosItems());
     }
 
     @PostMapping
-    public ResponseEntity<Mesa> crearMesa(@RequestBody Mesa mesa) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(mesaService.crearMesa(mesa));
+    public ResponseEntity<ItemMenu> agregarItemMenu(@RequestBody ItemMenu itemMenu) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(menuService.agregarItemMenu(itemMenu));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Mesa> editarMesa(@PathVariable Long id, @RequestBody Mesa mesa) {
-        Mesa actualizada = mesaService.editarMesa(id, mesa);
-        if (actualizada != null) {
-            return ResponseEntity.ok(actualizada);
+    public ResponseEntity<ItemMenu> editarItemMenu(@PathVariable Long id, @RequestBody ItemMenu itemMenu) {
+        ItemMenu actualizado = menuService.editarItemMenu(id, itemMenu);
+        if (actualizado != null) {
+            return ResponseEntity.ok(actualizado);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarMesa(@PathVariable Long id) {
-        mesaService.eliminarMesa(id);
+    public ResponseEntity<Void> eliminarItemMenu(@PathVariable Long id) {
+        menuService.eliminarItemMenu(id);
         return ResponseEntity.noContent().build();
     }
 }

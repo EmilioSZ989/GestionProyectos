@@ -1,24 +1,22 @@
 package com.example.facturaPOS.repository;
 
 import com.example.facturaPOS.model.Factura;
+import com.example.facturaPOS.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
-public interface FacturaRepository extends JpaRepository<Factura, Integer> {
+@Repository
+public interface FacturaRepository extends JpaRepository<Factura, Long> {
+    @Query("SELECT f FROM Factura f WHERE f.fechaEmision = ?1")
+    List<Factura> findAllByFechaEmision(LocalDate fecha);
 
-    @Query("SELECT f FROM Factura f WHERE f.idFactura = :id_factura")
-    Factura generateSalesReportByInvoiceNumber(@Param("id_factura") int idFactura);
+    @Query("SELECT f FROM Factura f WHERE MONTH(f.fechaEmision) = ?1 AND YEAR(f.fechaEmision) = ?2")
+    List<Factura> findAllByFechaEmisionMonthAndFechaEmisionYear(int month, int year);
 
-    @Query("SELECT f FROM Factura f WHERE f.pedido.cliente.idCliente = :id_cliente")
-    List<Factura> findVentasPorCliente(@Param("id_cliente") int idCliente);
-
-    @Query("SELECT f FROM Factura f WHERE DATE(f.fechaEmision) = :fecha")
-    List<Factura> findVentasDelDia(@Param("fecha") Date fecha);
-
-    @Query("SELECT f FROM Factura f WHERE EXTRACT(MONTH FROM f.fechaEmision) = :mes")
-    List<Factura> findVentasPorMes(@Param("mes") int mes);
+    @Query("SELECT f FROM Factura f WHERE f.pedido.cliente = ?1")
+    List<Factura> findAllByPedido_Cliente(Cliente cliente);
 }

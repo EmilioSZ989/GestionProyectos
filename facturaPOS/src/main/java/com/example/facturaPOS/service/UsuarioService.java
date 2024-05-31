@@ -1,13 +1,12 @@
 package com.example.facturaPOS.service;
 
-import com.example.facturaPOS.model.Usuario;
-import com.example.facturaPOS.repository.UsuarioRepository;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.facturaPOS.model.Usuario;
+import com.example.facturaPOS.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -15,23 +14,26 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> findAll() {
-        return usuarioRepository.findAll();
-    }
-
-    public Optional<Usuario> findById(Integer id) {
-        return usuarioRepository.findById(id);
-    }
-
-    public Optional<Usuario> findByCorreo(String correo) {
-        return usuarioRepository.findByCorreo(correo);
-    }
-
-    public Usuario saveUsuario(Usuario usuario) {
+    public Usuario crearUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public void deleteUsuario(Integer id) {
-        usuarioRepository.deleteById(id);
+    public Usuario editarUsuario(int idUsuario, Usuario updatedUsuario) {
+        return usuarioRepository.findById(Long.valueOf(idUsuario)).map(usuario -> {
+            usuario.setNombreUsuario(updatedUsuario.getNombreUsuario());
+            usuario.setApellidoUsuario(updatedUsuario.getApellidoUsuario());
+            usuario.setCorreo(updatedUsuario.getCorreo());
+            usuario.setContrasena(updatedUsuario.getContrasena());
+            usuario.setTipoUsuario(updatedUsuario.getTipoUsuario());
+            return usuarioRepository.save(usuario);
+        }).orElse(null);
+    }
+
+    public void eliminarUsuario(int idUsuario) {
+        usuarioRepository.deleteById(Long.valueOf(idUsuario));
+    }
+
+    public List<Usuario> obtenerTodosLosUsuarios() {
+        return usuarioRepository.findAll();
     }
 }

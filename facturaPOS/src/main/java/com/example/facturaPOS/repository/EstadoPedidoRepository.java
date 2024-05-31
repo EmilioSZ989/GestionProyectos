@@ -1,10 +1,15 @@
-// EstadoPedidoRepository.java
 package com.example.facturaPOS.repository;
 
-import com.example.facturaPOS.model.EstadoPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-public interface EstadoPedidoRepository extends JpaRepository<EstadoPedido, Integer> {
-    Optional<EstadoPedido> findByEstadoPedido(String estadoPedido);
+import com.example.facturaPOS.model.EstadoPedido;
+
+@Repository
+public interface EstadoPedidoRepository extends JpaRepository<EstadoPedido, Long> {
+    
+    @Query("SELECT e FROM EstadoPedido e WHERE e.estadoPedido = :estado")
+    EstadoPedido findByEstadoPedido(@Param("estado") String estado);
 }
