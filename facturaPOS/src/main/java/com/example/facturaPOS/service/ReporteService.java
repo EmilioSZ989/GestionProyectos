@@ -1,40 +1,47 @@
 package com.example.facturaPOS.service;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.facturaPOS.model.Factura;
-import com.example.facturaPOS.model.Pago;
-import com.example.facturaPOS.repository.ClienteRepository;
+import com.example.facturaPOS.model.Pedido;
 import com.example.facturaPOS.repository.FacturaRepository;
-import com.example.facturaPOS.repository.PagoRepository;
+import com.example.facturaPOS.repository.PedidoRepository;
 
 @Service
 public class ReporteService {
 
     @Autowired
-    private PagoRepository pagoRepository;
+    private FacturaRepository facturaRepository;
 
-    /*public List<Pago> generarReporteVentas(String tipo) {
-        // Implementación de la lógica para generar reportes de ventas
-        // Aquí puedes realizar consultas a la base de datos, calcular totales, etc.
-        // Por ejemplo:
-        List<Pago> pagos = pagoRepository.findAll();
-        // Puedes aplicar filtros, ordenamientos u otras operaciones según sea necesario
-        // En este ejemplo, simplemente se devuelve la lista de pagos
-        return pagos;
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    public List<Pedido> generarReporteVentas(String tipo) {
+        LocalDate inicio;
+        LocalDate fin = LocalDate.now();
+        
+        if ("diario".equalsIgnoreCase(tipo)) {
+            inicio = LocalDate.now();
+        } else if ("mensual".equalsIgnoreCase(tipo)) {
+            inicio = YearMonth.now().atDay(1);
+        } else {
+            throw new IllegalArgumentException("Tipo de reporte no soportado: " + tipo);
+        }
+
+        return pedidoRepository.findByFechaPedidoBetween(inicio, fin);
     }
 
-    public Pago consultarPagoPorNumero(Long numeroPago) {
-        // Implementación de la lógica para consultar un pago por su número
-        return pagoRepository.findByNumero(numeroPago);
+    public Factura consultarFacturaPorNumero(Long numeroFactura) {
+        return facturaRepository.findById(numeroFactura)
+                .orElseThrow(() -> new RuntimeException("Factura no encontrada con el número: " + numeroFactura));
     }
 
-    public List<Pago> buscarPagosPorCliente(Long clienteId) {
-        // Implementación de la lógica para buscar pagos por cliente
-        return pagoRepository.findByClienteId(clienteId);
-    }*/
+    public List<Factura> buscarFacturasPorCliente(Long clienteId) {
+        return facturaRepository.findByClienteId(clienteId);
+    }
 }
-
