@@ -14,12 +14,14 @@ public class ConfiguracionService {
     @Autowired
     private ConfiguracionRepository configuracionRepository;
 
-    public void modificarIVA(BigDecimal nuevoIVA) {
+    public BigDecimal modificarIVA(BigDecimal nuevoIVA) {
         Configuracion configuracion = configuracionRepository.findByClave("IVA")
                 .orElseThrow(() -> new RuntimeException("Configuración de IVA no encontrada"));
         configuracion.setValor(nuevoIVA.toString());
         configuracionRepository.save(configuracion);
+        return nuevoIVA;
     }
+
 
     public BigDecimal obtenerIVA() {
         Configuracion configuracion = configuracionRepository.findByClave("IVA")

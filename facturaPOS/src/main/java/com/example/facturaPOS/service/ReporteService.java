@@ -36,6 +36,7 @@ public class ReporteService {
         return pedidoRepository.findByFechaPedidoBetween(inicio, fin);
     }
 
+
     public Factura consultarFacturaPorNumero(Long numeroFactura) {
         return facturaRepository.findById(numeroFactura)
                 .orElseThrow(() -> new RuntimeException("Factura no encontrada con el número: " + numeroFactura));

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Sistema POS</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar">
+            <h1>Restaurant POS - Administrador</h1>
+            <button id="logoutBtn">Cerrar sesión</button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="sidebar">
+            <h2>Menú de Administrador</h2>
+            <ul>
+                <li><a href="#" id="modifyVATBtn">Modificar IVA</a></li>
+                <li><a href="#" id="generateReportBtn">Generar Reporte de Ventas</a></li>
+                <li><a href="#" id="manageUsersBtn">Gestionar Usuarios</a></li>
+                <li><a href="#" id="manageMenuBtn">Gestionar Menú</a></li>
+                <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <!-- Content area where data will be displayed -->
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Restaurant POS</p>
+    </footer>
+
+    <!-- Modal para modificar el IVA -->
+<div id="modifyVATModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Modificar IVA</h2>
+        <form id="modifyVATForm">
+            <label for="newVAT">Nuevo Valor del IVA:</label>
+            <input type="number" id="newVAT" name="newVAT" step="0.01" required>
+            <button type="button" onclick="submitModifyVATForm()">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="generateReportModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Generar Reporte de Ventas</h2>
+        <form id="generateReportForm">
+            <label for="reportType">Tipo de Reporte:</label>
+            <select id="reportType" name="reportType" required>
+                <option value="diario">Diario</option>
+                <option value="mensual">Mensual</option>
+            </select>
+            <button type="button" id="generatePeriodReportBtn">Generar Reporte por Periodo</button>
+            <br>
+            <label for="invoiceNumber">Ingresar Número de Factura:</label>
+            <input type="text" id="invoiceNumber" name="invoiceNumber">
+            <button type="button" id="searchInvoiceBtn">Buscar por Factura</button>
+            <br>
+            <label for="clientSearch">Buscar Cliente:</label>
+            <input type="text" id="clientSearch" name="clientSearch">
+            <button type="button" id="searchClientBtn">Buscar por Cliente</button>
+            <br>
+        </form>
+        <!-- Área donde se mostrará el reporte generado -->
+        <div id="reportArea">
+            <!-- Aquí se mostrará el reporte generado -->
+        </div>
+    </div>
+</div>
+
+
+
+
+    <div id="manageUsersModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Gestionar Usuarios</h2>
+            <!-- Formulario para gestionar usuarios -->
+        </div>
+    </div>
+    
+    <div id="manageMenuModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Gestionar Menú</h2>
+            <!-- Formulario para gestionar el menú -->
+        </div>
+    </div>
+    
+    <div id="manageTablesModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Gestionar Mesas y Pedidos</h2>
+            <!-- Formulario para gestionar mesas y pedidos -->
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

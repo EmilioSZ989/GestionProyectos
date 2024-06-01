@@ -20,7 +20,6 @@ import com.example.facturaPOS.service.MenuService;
 
 @RestController
 @RequestMapping("/menu")
-@CrossOrigin(origins = "http://localhost:4200") // Permitir solicitudes desde el servidor de desarrollo de Angular
 public class MenuController {
 
     @Autowired

@@ -22,10 +22,11 @@ public class ConfiguracionController {
     private ConfiguracionService configuracionService;
 
     @PutMapping("/iva")
-    public ResponseEntity<Void> modificarIVA(@RequestParam BigDecimal nuevoIVA) {
-        configuracionService.modificarIVA(nuevoIVA);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<BigDecimal> modificarIVA(@RequestParam BigDecimal nuevoIVA) {
+        BigDecimal nuevoValorIVA = configuracionService.modificarIVA(nuevoIVA);
+        return ResponseEntity.ok(nuevoValorIVA);
     }
+
 
     @GetMapping("/iva")
     public ResponseEntity<BigDecimal> obtenerIVA() {
