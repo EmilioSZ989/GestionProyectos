@@ -1,57 +1,130 @@
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background-color: #f8f8f8;
 }
 
-nav {
-    background-color: #9E332f;
-    color: white;
-    padding: 1rem;
-}
-
+/* Navbar */
 .navbar {
+    background-color: #343a40;
+    color: #fff;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-main {
-    flex: 1;
-    padding: 1rem;
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
 }
 
-footer {
-    background-color: #1A0000;
+.navbar button {
+    background-color: #28a745;
     color: white;
+    border: none;
+    padding: 10px 20px;
     text-align: center;
-    padding: 1rem;
-    position: relative;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.navbar button:hover {
+    background-color: #218838;
+}
+
+/* Main Content */
+main {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+main h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #343a40;
+}
+
+#menuItems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.menu-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: calc(33% - 40px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.menu-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item h3 {
+    margin-top: 0;
+    color: #343a40;
+}
+
+.menu-item p {
+    color: #6c757d;
+}
+
+/* Footer */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Modal */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.5);
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
 }
 
 .modal-content {
-    background-color: white;
-    margin: 15% auto;
+    background-color: #fff;
+    margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .close {
@@ -59,6 +132,7 @@ footer {
     float: right;
     font-size: 28px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .close:hover,
@@ -68,8 +142,41 @@ footer {
     cursor: pointer;
 }
 
-.menu-item {
-    border: 1px solid #ddd;
+.modal h2 {
+    margin-top: 0;
+    color: #343a40;
+}
+
+.modal label {
+    display: block;
+    margin-bottom: 10px;
+    color: #343a40;
+}
+
+.modal input[type="text"],
+.modal input[type="password"] {
+    width: calc(100% - 22px); /* Adjust for padding */
     padding: 10px;
-    margin: 10px 0;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.modal button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.modal button:hover {
+    background-color: #218838;
 }

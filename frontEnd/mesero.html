@@ -3,9 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mesero - Sistema POS</title>
+    <link rel="stylesheet" href="css/mesero.css">
 </head>
 <body>
-    <p>mesero</p>
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar">
+            <h1>Restaurant POS - Mesero</h1>
+            <button id="logoutBtn">Cerrar sesión</button>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="sidebar">
+            <h2>Menú de Mesero</h2>
+            <ul>
+                <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
+                <li><a href="#" id="takeOrderBtn">Tomar Pedido</a></li>
+                <li><a href="#" id="calculateTipBtn">Calcular Propina</a></li>
+                <li><a href="#" id="processPaymentBtn">Procesar Pagos</a></li>
+                <li><a href="#" id="registerClientInfoBtn">Registrar Información del Cliente</a></li>
+                <li><a href="#" id="generateInvoiceBtn">Generar Factura</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <!-- Content area where data will be displayed -->
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Restaurant POS</p>
+    </footer>
+
+    <script src="js/mesero.js"></script>
 </body>
 </html>

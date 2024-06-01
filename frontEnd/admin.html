@@ -15,97 +15,149 @@
         </div>
     </nav>
     
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Menú de Administrador</h2>
+        <ul>
+            <li><a href="#" id="modifyVATBtn">Modificar IVA</a></li>
+            <li><a href="#" id="generateReportBtn">Generar Reporte de Ventas</a></li>
+            <li><a href="#" id="manageUsersBtn">Gestionar Usuarios</a></li>
+            <li><a href="#" id="manageMenuBtn">Gestionar Menú</a></li>
+        </ul>
+    </div>
+    
     <!-- Main Content -->
     <main>
-        <div class="sidebar">
-            <h2>Menú de Administrador</h2>
-            <ul>
-                <li><a href="#" id="modifyVATBtn">Modificar IVA</a></li>
-                <li><a href="#" id="generateReportBtn">Generar Reporte de Ventas</a></li>
-                <li><a href="#" id="manageUsersBtn">Gestionar Usuarios</a></li>
-                <li><a href="#" id="manageMenuBtn">Gestionar Menú</a></li>
-                <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
-            </ul>
-        </div>
-        <div class="content">
-            <!-- Content area where data will be displayed -->
-        </div>
+        <!-- Sección para modificar el IVA -->
+        <section id="modifyVATSection" class="hidden">
+            <h2>Modificar IVA</h2>
+            <form id="modifyVATForm">
+                <label for="newVAT">Nuevo Valor del IVA:</label>
+                <input type="number" id="newVAT" name="newVAT" step="0.01" required>
+                <button type="button" onclick="submitModifyVATForm()">Guardar Cambios</button>
+            </form>
+        </section>
+        
+        <!-- Sección para generar reporte de ventas -->
+        <section id="generateReportSection" class="hidden">
+            <h2>Generar Reporte de Ventas</h2>
+            <form id="generateReportForm">
+                <!-- Contenido del formulario -->
+                <label for="reportType">Tipo de Reporte:</label>
+                <select id="reportType" name="reportType" required>
+                    <option value="diario">Diario</option>
+                    <option value="mensual">Mensual</option>
+                </select>
+                <button type="button" id="generatePeriodReportBtn">Generar Reporte por Periodo</button>
+                <br>
+                <label for="invoiceNumber">Ingresar Número de Factura:</label>
+                <input type="text" id="invoiceNumber" name="invoiceNumber">
+                <button type="button" id="searchInvoiceBtn">Buscar por Factura</button>
+                <br>
+                <label for="clientSearch">Buscar Cliente:</label>
+                <input type="text" id="clientSearch" name="clientSearch">
+                <button type="button" id="searchClientBtn">Buscar por Cliente</button>
+                <br>
+            </form>
+            <div id="reportArea">
+                <!-- Aquí se mostrará el reporte generado -->
+            </div>
+        </section>
+        
+        <!-- Sección para gestionar usuarios -->
+        <section id="manageUsersSection" class="hidden">
+            <h2>Gestionar Usuarios</h2>
+            <form id="createUserForm">
+                <button id="getAllUsersBtn">Obtener Todos los Usuarios</button>
+                <h3>Crear Usuario</h3>
+                <form id="createUserForm">
+                <label for="createUserName">Nombre:</label>
+                <input type="text" id="createUserName" name="nombreUsuario" required>
+                <label for="createUserSurname">Apellido:</label>
+                <input type="text" id="createUserSurname" name="apellidoUsuario" required>
+                <label for="createUserEmail">Correo:</label>
+                <input type="email" id="createUserEmail" name="correo" required>
+                <label for="createUserPassword">Contraseña:</label>
+                <input type="password" id="createUserPassword" name="contrasena" required>
+                <label for="createUserType">Tipo de Usuario (ID):</label>
+                <input type="number" id="createUserType" name="tipoUsuario.idTipoUsuario" required>
+                <button type="submit">Crear Usuario</button>
+                </form>
+                <h3>Editar Usuario</h3>
+                <form id="editUserForm">
+                <label for="editUserId">ID del Usuario:</label>
+                <input type="number" id="editUserId" name="id" required>
+                <label for="editUserName">Nombre:</label>
+                <input type="text" id="editUserName" name="nombreUsuario" required>
+                <label for="editUserSurname">Apellido:</label>
+                <input type="text" id="editUserSurname" name="apellidoUsuario" required>
+                <label for="editUserEmail">Correo:</label>
+                <input type="email" id="editUserEmail" name="correo" required>
+                <label for="editUserPassword">Contraseña:</label>
+                <input type="password" id="editUserPassword" name="contrasena" required>
+                <label for="editUserType">Tipo de Usuario (ID):</label>
+                <input type="number" id="editUserType" name="tipoUsuario.idTipoUsuario" required>
+                <button type="submit">Editar Usuario</button>
+                </form>
+                <h3>Eliminar Usuario</h3>
+                <form id="deleteUserForm">
+                    <label for="deleteUserId">ID del Usuario:</label>
+                    <input type="number" id="deleteUserId" name="id" required>
+                    <button type="submit">Eliminar Usuario</button>
+                </form>
+                <div id="usersArea">
+                    <!-- Aquí se mostrarán los usuarios -->
+                </div>
+        </section>
+        
+        <!-- Sección para gestionar menú -->
+        <section id="manageMenuSection" class="hidden">
+            <h2>Gestionar Menú</h2>
+            <button id="getAllMenuItemsBtn">Obtener Todos los Ítems del Menú</button>
+                <h3>Crear Ítem de Menú</h3>
+                <form id="createMenuItemForm">
+                    <label for="createItemName">Nombre del Ítem:</label>
+                    <input type="text" id="createItemName" name="nombreItem" required>
+                    <label for="createItemDescription">Descripción:</label>
+                    <input type="text" id="createItemDescription" name="descripcion" required>
+                    <label for="createItemPrice">Precio:</label>
+                    <input type="number" id="createItemPrice" name="precio" required>
+                    <label for="createItemCategory">Categoría (ID):</label>
+                    <input type="number" id="createItemCategory" name="categoria.idCategoria" required>
+                    <button type="submit">Crear Ítem</button>
+                </form>
+                <h3>Editar Ítem de Menú</h3>
+                <form id="editMenuItemForm">
+                    <label for="editItemId">ID del Ítem:</label>
+                    <input type="number" id="editItemId" name="id" required>
+                    <label for="editItemName">Nombre del Ítem:</label>
+                    <input type="text" id="editItemName" name="nombreItem" required>
+                    <label for="editItemDescription">Descripción:</label>
+                    <input type="text" id="editItemDescription" name="descripcion" required>
+                    <label for="editItemPrice">Precio:</label>
+                    <input type="number" id="editItemPrice" name="precio" required>
+                    <label for="editItemCategory">Categoría (ID):</label>
+                    <input type="number" id="editItemCategory" name="categoria.idCategoria" required>
+                    <button type="submit">Editar Ítem</button>
+                </form>
+                <h3>Eliminar Ítem de Menú</h3>
+                <form id="deleteMenuItemForm">
+                    <label for="deleteItemId">ID del Ítem:</label>
+                    <input type="number" id="deleteItemId" name="id" required>
+                    <button type="submit">Eliminar Ítem</button>
+                </form>
+                <div id="menuItemsArea">
+                    <!-- Aquí se mostrarán los ítems del menú -->
+                </div>
+        </section>
     </main>
-    
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Restaurant POS</p>
     </footer>
 
-    <!-- Modal para modificar el IVA -->
-<div id="modifyVATModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Modificar IVA</h2>
-        <form id="modifyVATForm">
-            <label for="newVAT">Nuevo Valor del IVA:</label>
-            <input type="number" id="newVAT" name="newVAT" step="0.01" required>
-            <button type="button" onclick="submitModifyVATForm()">Guardar Cambios</button>
-        </form>
-    </div>
-</div>
-
-
-<div id="generateReportModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Generar Reporte de Ventas</h2>
-        <form id="generateReportForm">
-            <label for="reportType">Tipo de Reporte:</label>
-            <select id="reportType" name="reportType" required>
-                <option value="diario">Diario</option>
-                <option value="mensual">Mensual</option>
-            </select>
-            <button type="button" id="generatePeriodReportBtn">Generar Reporte por Periodo</button>
-            <br>
-            <label for="invoiceNumber">Ingresar Número de Factura:</label>
-            <input type="text" id="invoiceNumber" name="invoiceNumber">
-            <button type="button" id="searchInvoiceBtn">Buscar por Factura</button>
-            <br>
-            <label for="clientSearch">Buscar Cliente:</label>
-            <input type="text" id="clientSearch" name="clientSearch">
-            <button type="button" id="searchClientBtn">Buscar por Cliente</button>
-            <br>
-        </form>
-        <!-- Área donde se mostrará el reporte generado -->
-        <div id="reportArea">
-            <!-- Aquí se mostrará el reporte generado -->
-        </div>
-    </div>
-</div>
-
-
-
-
-    <div id="manageUsersModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Gestionar Usuarios</h2>
-            <!-- Formulario para gestionar usuarios -->
-        </div>
-    </div>
-    
-    <div id="manageMenuModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Gestionar Menú</h2>
-            <!-- Formulario para gestionar el menú -->
-        </div>
-    </div>
-    
-    <div id="manageTablesModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Gestionar Mesas y Pedidos</h2>
-            <!-- Formulario para gestionar mesas y pedidos -->
-        </div>
-    </div>
-
     <script src="js/admin.js"></script>
 </body>
 </html>
+
