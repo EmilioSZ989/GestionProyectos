@@ -1,0 +1,21 @@
+.footer {
+    background-color: #9E332f;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer p {
+    margin: 0; /* Eliminamos el margen por defecto del párrafo */
+    font-size: 16px;
+}
+
+.footer p a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer p a:hover {
+    text-decoration: underline; /* Subrayamos el enlace al pasar el cursor */
+}

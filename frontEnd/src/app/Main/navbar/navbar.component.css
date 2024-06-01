@@ -1,0 +1,34 @@
+.navbar {
+  background-color: #9E332f;
+  color: white;
+  padding: 10px 20px; /* Aumentamos el espacio de relleno horizontal */
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Centramos verticalmente los elementos */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadimos una ligera sombra */
+}
+
+.navbar-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.8rem; /* Aumentamos ligeramente el tamaño del texto */
+  font-weight: bold; /* Hacemos que el texto sea más audaz */
+}
+
+.navbar-brand a:hover {
+  color: #7D2623;
+}
+
+.navbar-login button {
+  background-color: #7D2623;
+  color: white;
+  border: none;
+  padding: 10px 20px; /* Aumentamos el espacio de relleno */
+  border-radius: 6px; /* Aumentamos el radio de borde */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Añadimos una transición suave */
+}
+
+.navbar-login button:hover {
+  background-color: #5C1918;
+}
