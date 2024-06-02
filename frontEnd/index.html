@@ -5,41 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant POS</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/boxicons/2.0.7/css/boxicons.min.css">
 </head>
 <body>
-    <!-- Navbar -->
     <nav>
         <div class="navbar">
-            <h1>Restaurant POS</h1>
+            <img src="../../images/logo.png" alt="Palogrande Restaurant Logo" class="logo">
+            <h1>Palogrande Restaurant</h1>
             <button id="loginBtn">Login</button>
         </div>
     </nav>
     
+<!-- Sesgada Section -->
+<section class="sesgada-section">
+    <div class="sesgada-content">
+        <div class="sesgada-text">
+            <h2>PLAN PA’ COMER COMO EN PARRILLA, PLAN PA' COMER EN PALOGRANDE!</h2>
+            <p>Si estás de celebración, si quieres saborear algo delicioso, disfrutar de un buen corte a la parrilla, compartir un rato ameno o simplemente buscas satisfacer tu hambre con algo rápido y exquisito... ¡llegaste al lugar perfecto! ¿Qué se te antoja? ¡Hoy se come en Palogrande Restaurant!
+                <br> 
+                <br> 
+            Somos un restaurante especializado en platos a la parrilla, donde cada bocado está lleno de sabor y autenticidad. Nuestra excelente atención te hará sentir como en casa, brindándote una experiencia culinaria que recordarás. ¡Ven y disfruta de lo mejor en parrilladas con nosotros!</p>
+        </div>
+        <div class="sesgada-image">
+            <img src="../images/CarneAsada.png" alt="Plan Pa´ Comer Como En Paseo">
+        </div>
+    </div>
+</section>
+
+
     <!-- Main Content -->
     <main>
         <h2>Menu</h2>
         <div id="menuItems"></div>
     </main>
-    
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Restaurant POS</p>
-    </footer>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Login</h2>
-            <form id="loginForm">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <button type="submit">Login</button>
-            </form>
+    <section class="gallery" id="portafolio">
+        <div class="contenedor">
+          <h2 class="subtitulo">Galeria</h2>
+          <div class="contenedor-galeria">
+            <img src="images/1.jpg" alt="1" class="img-galeria" />
+            <img src="images/2.jpg" alt="2" class="img-galeria" />
+            <img src="images/3.jpg" alt="3" class="img-galeria" />
+            <img src="images/4.jpg" alt="4" class="img-galeria" />
+            <img src="images/5.jpg" alt="5" class="img-galeria" />
+            <img src="images/6.jpg" alt="6" class="img-galeria" />
+          </div>
         </div>
+      </section>
+      <section class="img-light">
+        <img src="" alt="" class="agregar-imagen">
+        <img src="images/x.png" alt="cerrarx" class="close">
+      </section>
+
+      <div class="spacer"></div>
+
+    <!-- Footer -->
+    
+  <footer id="contacto">
+    <div class="contenedor footer-content">
+      <div class="contact-us">
+        <h2 class="brand">Palogrande</h2>
+        <p>Convierte tus antojos en realidad con nuestras creaciones culinarias.</p>
+        <div class="social-media">
+          <a href="#" class="social-media-icon">
+            <i class="bx bxl-facebook"></i>
+          </a>
+          <a href="#" class="social-media-icon">
+            <i class="bx bxl-twitter"></i>
+          </a>
+          <a href="#" class="social-media-icon">
+            <i class="bx bxl-instagram"></i>
+          </a>
+        </div>
+      </div>
     </div>
+    <div class="line"></div>
+  </footer>
+
+    
+   <!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2><span class="login-text">Login</span></h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
 
     <script src="js/scripts.js"></script>
 </body>
