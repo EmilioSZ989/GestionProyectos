@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.facturaPOS.model.Categoria;
 import com.example.facturaPOS.model.EstadoPedido;
 import com.example.facturaPOS.model.Pedido;
 import com.example.facturaPOS.model.PedidoRequest;
 import com.example.facturaPOS.model.PropinaRequest;
 import com.example.facturaPOS.model.TotalConPropina;
+import com.example.facturaPOS.repository.CategoriaRepository;
 import com.example.facturaPOS.repository.ClienteRepository;
 import com.example.facturaPOS.repository.PedidoRepository;
+import com.example.facturaPOS.service.CategoriaService;
 import com.example.facturaPOS.service.PedidoService;
 
 @RestController
@@ -33,6 +36,9 @@ public class PedidoController {
     
     @Autowired
     private PedidoRepository pedidoRepository;
+    
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping
     public ResponseEntity<List<Pedido>> obtenerTodosLosPedidos() {
@@ -82,5 +88,10 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoActualizado);
     }
 
+
+    @GetMapping("/categorias")
+    public ResponseEntity<List<Categoria>> obtenerTodasLasCategorias() {
+        return ResponseEntity.ok(categoriaService.obtenerTodasLasCategorias());
+    }
 
 }

@@ -51,8 +51,6 @@ body {
     z-index: 101; /* Asegurar que esté por debajo del navbar y el footer */
 }
 
-
-
 .sidebar h2 {
     margin-top: 0;
 }
@@ -82,7 +80,17 @@ body {
 /* Main Content */
 main {
     margin-left: 250px;
-    padding: 0px 20px 70px 20px;
+    padding: 20px;
+    padding-bottom: 100px;
+}
+
+.content {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    margin: 20px; /* Espacio entre secciones */
+    position: relative;
 }
 
 /* Footer */
@@ -102,39 +110,8 @@ footer {
     display: none;
 }
 
-/* Modals */
-section {
-    display: none;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: #fefefe;
-    margin: 20px; /* Espacio entre secciones */
-    position: relative;
-}
-
-section h2 {
-    margin-top: 0;
-}
-
-section label {
-    display: block;
-    margin-bottom: 10px;
-}
-
-section input[type="text"],
-section input[type="number"],
-section input[type="email"],
-section select {
-    width: calc(100% - 20px); /* Ajustar al ancho del contenedor con margen */
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-section button {
+/* Estilos adicionales para botones y formularios */
+button {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -149,24 +126,23 @@ section button {
     transition: background-color 0.3s;
 }
 
-section button:hover {
+button:hover {
     background-color: #45a049;
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
+label {
+    display: block;
+    margin-bottom: 10px;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select {
+    width: calc(100% - 20px); /* Ajustar al ancho del contenedor con margen */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }

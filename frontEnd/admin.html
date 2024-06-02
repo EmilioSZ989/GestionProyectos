@@ -38,7 +38,7 @@
             </form>
         </section>
         
-        <!-- Sección para generar reporte de ventas -->
+       <!-- Sección para generar reporte de ventas -->
         <section id="generateReportSection" class="hidden">
             <h2>Generar Reporte de Ventas</h2>
             <form id="generateReportForm">
@@ -54,8 +54,11 @@
                 <input type="text" id="invoiceNumber" name="invoiceNumber">
                 <button type="button" id="searchInvoiceBtn">Buscar por Factura</button>
                 <br>
+                <!-- Aquí se agrega el select para buscar por cliente -->
                 <label for="clientSearch">Buscar Cliente:</label>
-                <input type="text" id="clientSearch" name="clientSearch">
+                <select id="clientSearch" name="clientSearch">
+                    <!-- Opciones de cliente generadas dinámicamente por JavaScript -->
+                </select>
                 <button type="button" id="searchClientBtn">Buscar por Cliente</button>
                 <br>
             </form>
@@ -63,14 +66,14 @@
                 <!-- Aquí se mostrará el reporte generado -->
             </div>
         </section>
+
         
         <!-- Sección para gestionar usuarios -->
         <section id="manageUsersSection" class="hidden">
             <h2>Gestionar Usuarios</h2>
+            <button id="getAllUsersBtn">Obtener Todos los Usuarios</button>
             <form id="createUserForm">
-                <button id="getAllUsersBtn">Obtener Todos los Usuarios</button>
                 <h3>Crear Usuario</h3>
-                <form id="createUserForm">
                 <label for="createUserName">Nombre:</label>
                 <input type="text" id="createUserName" name="nombreUsuario" required>
                 <label for="createUserSurname">Apellido:</label>
@@ -79,85 +82,80 @@
                 <input type="email" id="createUserEmail" name="correo" required>
                 <label for="createUserPassword">Contraseña:</label>
                 <input type="password" id="createUserPassword" name="contrasena" required>
-                <label for="createUserType">Tipo de Usuario (ID):</label>
-                <input type="number" id="createUserType" name="tipoUsuario.idTipoUsuario" required>
+                <label for="createUserType">Tipo de Usuario:</label>
+                <select id="createUserType" name="tipoUsuario.idTipoUsuario" required>
+                    <option value="1">Administrador</option>
+                    <option value="2">Mesero</option>
+                </select>
                 <button type="submit">Crear Usuario</button>
-                </form>
-                <h3>Editar Usuario</h3>
-                <form id="editUserForm">
-                <label for="editUserId">ID del Usuario:</label>
-                <input type="number" id="editUserId" name="id" required>
-                <label for="editUserName">Nombre:</label>
-                <input type="text" id="editUserName" name="nombreUsuario" required>
-                <label for="editUserSurname">Apellido:</label>
-                <input type="text" id="editUserSurname" name="apellidoUsuario" required>
-                <label for="editUserEmail">Correo:</label>
-                <input type="email" id="editUserEmail" name="correo" required>
-                <label for="editUserPassword">Contraseña:</label>
-                <input type="password" id="editUserPassword" name="contrasena" required>
-                <label for="editUserType">Tipo de Usuario (ID):</label>
-                <input type="number" id="editUserType" name="tipoUsuario.idTipoUsuario" required>
-                <button type="submit">Editar Usuario</button>
-                </form>
-                <h3>Eliminar Usuario</h3>
-                <form id="deleteUserForm">
-                    <label for="deleteUserId">ID del Usuario:</label>
-                    <input type="number" id="deleteUserId" name="id" required>
-                    <button type="submit">Eliminar Usuario</button>
-                </form>
-                <div id="usersArea">
-                    <!-- Aquí se mostrarán los usuarios -->
-                </div>
+            </form>
+            <!-- Resto del contenido -->
         </section>
         
-        <!-- Sección para gestionar menú -->
         <section id="manageMenuSection" class="hidden">
             <h2>Gestionar Menú</h2>
             <button id="getAllMenuItemsBtn">Obtener Todos los Ítems del Menú</button>
+            
+            <!-- Formulario para crear ítems de menú -->
+            <form id="createMenuItemForm">
                 <h3>Crear Ítem de Menú</h3>
-                <form id="createMenuItemForm">
-                    <label for="createItemName">Nombre del Ítem:</label>
-                    <input type="text" id="createItemName" name="nombreItem" required>
-                    <label for="createItemDescription">Descripción:</label>
-                    <input type="text" id="createItemDescription" name="descripcion" required>
-                    <label for="createItemPrice">Precio:</label>
-                    <input type="number" id="createItemPrice" name="precio" required>
-                    <label for="createItemCategory">Categoría (ID):</label>
-                    <input type="number" id="createItemCategory" name="categoria.idCategoria" required>
-                    <button type="submit">Crear Ítem</button>
-                </form>
+                <label for="createItemName">Nombre del Ítem:</label>
+                <input type="text" id="createItemName" name="nombreItem" required>
+                <label for="createItemDescription">Descripción:</label>
+                <input type="text" id="createItemDescription" name="descripcion" required>
+                <label for="createItemPrice">Precio:</label>
+                <input type="number" id="createItemPrice" name="precio" required>
+                <label for="createItemCategory">Categoría:</label>
+                <select id="createItemCategory" name="categoria.idCategoria" required>
+                    <!-- Opciones de categoría generadas dinámicamente por JavaScript -->
+                </select>
+                <button type="submit">Crear Ítem</button>
+            </form>
+        
+            <!-- Formulario para editar ítems de menú -->
+            <form id="editMenuItemForm" class="hidden">
                 <h3>Editar Ítem de Menú</h3>
-                <form id="editMenuItemForm">
-                    <label for="editItemId">ID del Ítem:</label>
-                    <input type="number" id="editItemId" name="id" required>
-                    <label for="editItemName">Nombre del Ítem:</label>
-                    <input type="text" id="editItemName" name="nombreItem" required>
-                    <label for="editItemDescription">Descripción:</label>
-                    <input type="text" id="editItemDescription" name="descripcion" required>
-                    <label for="editItemPrice">Precio:</label>
-                    <input type="number" id="editItemPrice" name="precio" required>
-                    <label for="editItemCategory">Categoría (ID):</label>
-                    <input type="number" id="editItemCategory" name="categoria.idCategoria" required>
-                    <button type="submit">Editar Ítem</button>
-                </form>
+                <label for="editItemId">ID del Ítem:</label>
+                <select id="editItemId" name="id" required>
+                    <!-- Opciones de ID de ítem generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="editItemName">Nombre del Ítem:</label>
+                <input type="text" id="editItemName" name="nombreItem" required>
+                <label for="editItemDescription">Descripción:</label>
+                <input type="text" id="editItemDescription" name="descripcion" required>
+                <label for="editItemPrice">Precio:</label>
+                <input type="number" id="editItemPrice" name="precio" required>
+                <label for="editItemCategory">Categoría:</label>
+                <select id="editItemCategory" name="categoria.idCategoria" required>
+                    <!-- Opciones de categoría generadas dinámicamente por JavaScript -->
+                </select>
+                <button type="submit">Editar Ítem</button>
+            </form>
+        
+            <!-- Formulario para eliminar ítems de menú -->
+            <form id="deleteMenuItemForm">
                 <h3>Eliminar Ítem de Menú</h3>
-                <form id="deleteMenuItemForm">
-                    <label for="deleteItemId">ID del Ítem:</label>
-                    <input type="number" id="deleteItemId" name="id" required>
-                    <button type="submit">Eliminar Ítem</button>
-                </form>
-                <div id="menuItemsArea">
-                    <!-- Aquí se mostrarán los ítems del menú -->
-                </div>
+                <label for="deleteItemId">ID del Ítem:</label>
+                <select id="deleteItemId" name="id" required>
+                    <!-- Opciones de ID de ítem generadas dinámicamente por JavaScript -->
+                </select>
+                <button type="submit">Eliminar Ítem</button>
+            </form>
+        
+            <!-- Área para mostrar los ítems del menú -->
+            <div id="menuItemsArea">
+                <!-- Aquí se mostrarán los ítems del menú -->
+            </div>
         </section>
-    </main>
+        
+        
+        
+            </main>
+            <!-- Footer -->
+<footer>
+    <p>&copy; 2024 Restaurant POS</p>
+</footer>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Restaurant POS</p>
-    </footer>
-
-    <script src="js/admin.js"></script>
+<script src="js/admin.js"></script>
 </body>
 </html>
-

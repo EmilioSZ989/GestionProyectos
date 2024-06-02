@@ -47,6 +47,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// Función para obtener todos los clientes
+function getAllClients() {
+    fetch('http://localhost:8080/clientes')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudieron obtener los clientes');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Poblar el elemento select con los clientes obtenidos
+            const clientSelect = document.getElementById('clientSearch');
+            clientSelect.innerHTML = '';
+            data.forEach(client => {
+                const option = document.createElement('option');
+                option.value = client.idCliente; // Suponiendo que cada cliente tiene un campo 'id'
+                option.textContent = `${client.nombreCliente} ${client.apellidoCliente}`; // Suponiendo que cada cliente tiene campos 'nombre' y 'apellido'
+                clientSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los clientes:', error);
+        });
+}
+
+// Función para mostrar una sección específica y ocultar las demás
+function showSection(sectionId) {
+    // Ocultar todas las secciones
+    var sections = document.getElementsByTagName("section");
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = "none";
+    }
+    // Mostrar la sección específica
+    var section = document.getElementById(sectionId);
+    section.style.display = "block";
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     const generateReportForm = document.getElementById("generateReportForm");
@@ -313,18 +349,68 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// Función para obtener todas las categorías de menú
+function getAllCategories() {
+    fetch('http://localhost:8080/pedidos/categorias')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudieron obtener las categorías');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Limpiar las opciones existentes
+            const createItemCategorySelect = document.getElementById('createItemCategory');
+            const editItemCategorySelect = document.getElementById('editItemCategory');
+            createItemCategorySelect.innerHTML = '';
+            editItemCategorySelect.innerHTML = '';
 
-// Función para mostrar una sección específica y ocultar las demás
-function showSection(sectionId) {
-    // Ocultar todas las secciones
-    var sections = document.getElementsByTagName("section");
-    for (var i = 0; i < sections.length; i++) {
-        sections[i].style.display = "none";
-    }
-    // Mostrar la sección específica
-    var section = document.getElementById(sectionId);
-    section.style.display = "block";
+            // Agregar las nuevas opciones
+            data.forEach(category => {
+                const option = document.createElement('option');
+                option.text = category.nombreCategoria;
+                option.value = category.idCategoria;
+                createItemCategorySelect.add(option);
+                editItemCategorySelect.add(option.cloneNode(true));
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener las categorías:', error);
+        });
 }
+
+// Función para obtener todos los ítems del menú
+function getAllMenuItems() {
+    fetch('http://localhost:8080/menu')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudieron obtener los ítems del menú');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Limpiar las opciones existentes
+            const editItemIdSelect = document.getElementById('editItemId');
+            const deleteItemIdSelect = document.getElementById('deleteItemId');
+            editItemIdSelect.innerHTML = '';
+            deleteItemIdSelect.innerHTML = '';
+
+            // Agregar las nuevas opciones
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.text = item.nombreItem;
+                option.value = item.idItemMenu;
+                editItemIdSelect.add(option);
+                deleteItemIdSelect.add(option.cloneNode(true));
+            });
+        })
+        .catch(error => {
+            console.error('Error al obtener los ítems del menú:', error);
+        });
+}
+
+
+
 
 // Funciones para mostrar las secciones correspondientes a los botones del menú lateral
 document.getElementById("modifyVATBtn").addEventListener("click", function() {
@@ -343,3 +429,26 @@ document.getElementById("manageMenuBtn").addEventListener("click", function() {
     showSection("manageMenuSection");
 });
 
+window.onload = function() {
+    // Llama a la función para obtener todos los clientes al cargar la página
+    getAllClients();
+};
+
+// Llamar a las funciones para cargar las opciones al cargar la página
+window.addEventListener('load', function() {
+    getAllCategories();
+    getAllMenuItems();
+});
+
+
+// Obtener referencia al botón "Gestionar Menú"
+const manageMenuBtn = document.getElementById('manageMenuBtn');
+
+// Obtener referencia al formulario para editar ítems de menú
+const editMenuItemForm = document.getElementById('editMenuItemForm');
+
+// Agregar un evento de clic al botón "Gestionar Menú"
+manageMenuBtn.addEventListener('click', function() {
+    // Mostrar el formulario para editar ítems de menú
+    editMenuItemForm.classList.remove('hidden');
+});

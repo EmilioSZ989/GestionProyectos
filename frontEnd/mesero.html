@@ -15,22 +15,160 @@
         </div>
     </nav>
     
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Menú de Mesero</h2>
+        <ul>
+            <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
+            <li><a href="#" id="takeOrderBtn">Tomar Pedido</a></li>
+            <li><a href="#" id="calculateTipBtn">Calcular Propina</a></li>
+            <li><a href="#" id="processPaymentBtn">Procesar Pagos</a></li>
+            <li><a href="#" id="registerClientInfoBtn">Registrar Información del Cliente</a></li>
+            <li><a href="#" id="generateInvoiceBtn">Generar Factura</a></li>
+        </ul>
+    </div>
+    
     <!-- Main Content -->
     <main>
-        <div class="sidebar">
-            <h2>Menú de Mesero</h2>
-            <ul>
-                <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
-                <li><a href="#" id="takeOrderBtn">Tomar Pedido</a></li>
-                <li><a href="#" id="calculateTipBtn">Calcular Propina</a></li>
-                <li><a href="#" id="processPaymentBtn">Procesar Pagos</a></li>
-                <li><a href="#" id="registerClientInfoBtn">Registrar Información del Cliente</a></li>
-                <li><a href="#" id="generateInvoiceBtn">Generar Factura</a></li>
-            </ul>
-        </div>
-        <div class="content">
-            <!-- Content area where data will be displayed -->
-        </div>
+        <!-- Sección para gestionar mesas y pedidos -->
+        <section id="manageTablesSection">
+            <h2>Gestionar Mesas y Pedidos</h2>
+            <button id="getAllTablesBtn">Obtener Todas las Mesas</button>
+            <form id="createTableForm">
+                <h3>Crear Mesa</h3>
+                <label for="createTableEstado">Estado:</label>
+                <input type="number" id="createTableEstado" name="estadoMesa" required>
+                <button type="submit">Crear Mesa</button>
+            </form>
+            <form id="editTableForm">
+                <h3>Editar Mesa</h3>
+                <label for="editTableId">ID de la Mesa:</label>
+                <input type="number" id="editTableId" name="id" required>
+                <label for="editTableEstado">Estado:</label>
+                <input type="number" id="editTableEstado" name="estadoMesa" required>
+                <button type="submit">Editar Mesa</button>
+            </form>
+            <form id="deleteTableForm">
+                <h3>Eliminar Mesa</h3>
+                <label for="deleteTableId">ID de la Mesa:</label>
+                <input type="number" id="deleteTableId" name="id" required>
+                <button type="submit">Eliminar Mesa</button>
+            </form>
+            <div id="tablesArea">
+                <!-- Aquí se mostrarán las mesas -->
+            </div>
+        </section>
+        
+        
+        
+        <section id="takeOrderSection" class="hidden">
+            <h2>Tomar Pedido</h2>
+            <form id="takeOrderForm">
+                <h3>Crear Pedido</h3>
+                <label for="orderUser">Usuario que realizó el Pedido:</label>
+                <input type="number" id="orderUser" name="userId" required>
+                <label for="orderClient">Cliente:</label>
+                <input type="number" id="orderClient" name="clientId" required>
+                <label for="orderItems">Ítems del Pedido:</label>
+                <textarea id="orderItems" name="orderItems" required></textarea>
+                <label for="orderTip">Propina (%):</label>
+                <input type="number" id="orderTip" name="propina" step="0.01" required>
+                <button type="submit">Enviar Pedido</button>
+            </form>
+            
+            
+            <form id="updateOrderStatusForm">
+                <h3>Actualizar Estado del Pedido</h3>
+                <label for="updateOrderId">ID del Pedido:</label>
+                <input type="number" id="updateOrderId" name="idPedido" required>
+                <label for="orderStatus">Estado del Pedido:</label>
+                <input type="text" id="orderStatus" name="estadoPedido" required>
+                <button type="submit">Actualizar Estado</button>
+            </form>
+            
+            <form id="assignOrderToTableForm">
+                <h3>Asignar Pedido a Mesa</h3>
+                <label for="assignOrderId">ID del Pedido:</label>
+                <input type="number" id="assignOrderId" name="idPedido" required>
+                <label for="assignTableId">ID de la Mesa:</label>
+                <input type="number" id="assignTableId" name="idMesa" required>
+                <button type="submit">Asignar a Mesa</button>
+            </form>
+        
+            <form id="calculateTipForm">
+                <h3>Calcular Propina</h3>
+                <label for="calculateTipOrderId">ID del Pedido:</label>
+                <input type="number" id="calculateTipOrderId" name="idPedido" required>
+                <label for="tipPercentage">Porcentaje de Propina (%):</label>
+                <input type="number" id="tipPercentage" name="porcentajePropina" step="0.01" required>
+                <button type="submit">Calcular Propina</button>
+            </form>
+        
+            <div id="ordersArea">
+                <!-- Aquí se mostrarán los pedidos tomados -->
+            </div>
+        </section>
+        
+        
+        <!-- Sección para calcular propina -->
+        <section id="calculateTipSection" class="hidden">
+            <h2>Calcular Propina</h2>
+            <form id="calculateTipForm">
+                <label for="orderId">ID del Pedido:</label>
+                <input type="number" id="orderId" name="idPedido" required>
+                <label for="tipPercentage">Porcentaje de Propina:</label>
+                <input type="number" id="tipPercentage" name="porcentajePropina" required>
+                <button type="submit">Calcular Propina</button>
+            </form>
+            <div id="tipArea">
+                <!-- Aquí se mostrarán los resultados de la propina calculada -->
+            </div>
+        </section>
+        
+        <!-- Sección para procesar pagos -->
+        <section id="processPaymentSection" class="hidden">
+            <h2>Procesar Pagos</h2>
+            <form id="processPaymentForm">
+                <label for="invoiceId">ID de la Factura:</label>
+                <input type="number" id="invoiceId" name="idFactura" required>
+                <label for="paymentAmount">Cantidad Recibida:</label>
+                <input type="number" id="paymentAmount" name="cantidadRecibida" required>
+                <label for="paymentType">Tipo de Pago:</label>
+                <input type="number" id="paymentType name="idTipoPago" required>
+                <button type="submit">Procesar Pago</button>
+            </form>
+            <div id="paymentArea">
+                <!-- Aquí se mostrarán los pagos procesados -->
+            </div>
+        </section>
+        
+        <!-- Sección para registrar información del cliente -->
+        <section id="registerClientInfoSection" class="hidden">
+            <h2>Registrar Información del Cliente</h2>
+            <form id="registerClientForm">
+                <label for="clientName">Nombre:</label>
+                <input type="text" id="clientName" name="nombreCliente" required>
+                <label for="clientEmail">Correo:</label>
+                <input type="email" id="clientEmail" name="correoCliente" required>
+                <button type="submit">Registrar Cliente</button>
+            </form>
+            <div id="clientsArea">
+                <!-- Aquí se mostrarán los clientes registrados -->
+            </div>
+        </section>
+        
+        <!-- Sección para generar factura -->
+        <section id="generateInvoiceSection" class="hidden">
+            <h2>Generar Factura</h2>
+            <form id="generateInvoiceForm">
+                <label for="invoiceOrderId">ID del Pedido:</label>
+                <input type="number" id="invoiceOrderId" name="idPedido" required>
+                <button type="submit">Generar Factura</button>
+            </form>
+            <div id="invoiceArea">
+                <!-- Aquí se mostrarán las facturas generadas -->
+            </div>
+        </section>
     </main>
     
     <!-- Footer -->
@@ -41,3 +179,4 @@
     <script src="js/mesero.js"></script>
 </body>
 </html>
+
