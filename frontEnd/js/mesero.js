@@ -212,3 +212,209 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Obtener elementos del DOM
+    const createTableEstado = document.getElementById('createTableEstado');
+    const editTableId = document.getElementById('editTableId');
+    const deleteTableId = document.getElementById('deleteTableId');
+    const orderUser = document.getElementById('orderUser');
+    const orderClient = document.getElementById('orderClient');
+    const updateOrderId = document.getElementById('updateOrderId');
+    const assignOrderId = document.getElementById('assignOrderId');
+    const assignTableId = document.getElementById('assignTableId');
+    const calculateTipOrderId = document.getElementById('calculateTipOrderId');
+    const invoiceId = document.getElementById('invoiceId');
+    const invoiceOrderId = document.getElementById('invoiceOrderId');
+
+    // Obtener mesas y llenar los selectores correspondientes
+    fetch('http://localhost:8080/mesas')
+        .then(response => response.json())
+        .then(data => {
+            editTableId.innerHTML = '';
+            deleteTableId.innerHTML = '';
+            assignTableId.innerHTML = '';
+
+            data.forEach(mesa => {
+                const option = document.createElement('option');
+                option.value = mesa.estadoMesa.estadoMesa;
+                option.text = mesa.idMesa; // Cambia 'name' por el campo que corresponda en tu JSON
+                editTableId.appendChild(option);
+
+                const optionDelete = option.cloneNode(true);
+                deleteTableId.appendChild(optionDelete);
+
+                const optionAssign = option.cloneNode(true);
+                assignTableId.appendChild(optionAssign);
+            });
+        })
+        .catch(error => console.error('Error fetching tables:', error));
+
+    // Obtener usuarios y llenar los selectores correspondientes
+    fetch('http://localhost:8080/usuarios')
+        .then(response => response.json())
+        .then(data => {
+            orderUser.innerHTML = '';
+            data.forEach(usuario => {
+                const option = document.createElement('option');
+                option.value = usuario.idUsuario;
+                option.text = usuario.nombreUsuario; // Cambia 'name' por el campo que corresponda en tu JSON
+                orderUser.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching users:', error));
+
+    // Obtener clientes y llenar los selectores correspondientes
+    fetch('http://localhost:8080/clientes')
+        .then(response => response.json())
+        .then(data => {
+            orderClient.innerHTML = '';
+            data.forEach(cliente => {
+                const option = document.createElement('option');
+                option.value = cliente.idCliente;
+                option.text = `${cliente.nombreCliente} ${cliente.apellidoCliente}`; // Cambia 'name' por el campo que corresponda en tu JSON
+                orderClient.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching clients:', error));
+
+    // Obtener pedidos y llenar los selectores correspondientes
+    fetch('http://localhost:8080/pedidos')
+        .then(response => response.json())
+        .then(data => {
+            updateOrderId.innerHTML = '';
+            assignOrderId.innerHTML = '';
+            calculateTipOrderId.innerHTML = '';
+            invoiceOrderId.innerHTML = '';
+
+            data.forEach(pedido => {
+                const option = document.createElement('option');
+                option.value = pedido.idPedido;
+                option.text = pedido.idPedido; // Cambia 'name' por el campo que corresponda en tu JSON
+                updateOrderId.appendChild(option);
+
+                const optionAssign = option.cloneNode(true);
+                assignOrderId.appendChild(optionAssign);
+
+                const optionCalculate = option.cloneNode(true);
+                calculateTipOrderId.appendChild(optionCalculate);
+
+                const optionInvoice = option.cloneNode(true);
+                invoiceOrderId.appendChild(optionInvoice);
+            });
+        })
+        .catch(error => console.error('Error fetching orders:', error));
+
+    // Obtener facturas y llenar los selectores correspondientes
+    fetch('http://localhost:8080/facturas')
+        .then(response => response.json())
+        .then(data => {
+            invoiceId.innerHTML = '';
+            data.forEach(factura => {
+                const option = document.createElement('option');
+                option.value = factura.idFactura;
+                option.text = factura.idFactura; // Cambia 'name' por el campo que corresponda en tu JSON
+                invoiceId.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error fetching invoices:', error));
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const menuItems = document.getElementById('menuItems');
+    const addItemBtn = document.getElementById('addItemBtn');
+    const orderItemsTable = document.getElementById('orderItemsTable').querySelector('tbody');
+    let orderItems = [];
+
+    // Función para obtener ítems del menú
+    function getMenuItems() {
+        fetch('http://localhost:8080/menu')
+            .then(response => response.json())
+            .then(data => {
+                menuItems.innerHTML = '';
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.idItemMenu;
+                    option.text = item.nombreItem; // Cambia 'nombreItem' por el campo que corresponda en tu JSON
+                    menuItems.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching menu items:', error));
+    }
+
+    // Función para añadir ítem al pedido
+    function addItemToOrder() {
+        const selectedItem = menuItems.options[menuItems.selectedIndex];
+        const itemQuantity = parseInt(document.getElementById('itemQuantity').value);
+        const item = {
+            id: selectedItem.value,
+            name: selectedItem.text,
+            quantity: itemQuantity
+        };
+        orderItems.push(item);
+        updateOrderItemsTable();
+    }
+
+    // Función para actualizar la tabla de ítems del pedido
+    function updateOrderItemsTable() {
+        orderItemsTable.innerHTML = '';
+        orderItems.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td><button type="button" onclick="removeItemFromOrder(${index})">Eliminar</button></td>
+            `;
+            orderItemsTable.appendChild(row);
+        });
+    }
+
+    // Función para remover ítem del pedido
+    window.removeItemFromOrder = function(index) {
+        orderItems.splice(index, 1);
+        updateOrderItemsTable();
+    };
+
+    // Obtener ítems del menú al cargar la página
+    getMenuItems();
+
+    // Event listener para añadir ítem al pedido
+    addItemBtn.addEventListener('click', addItemToOrder);
+
+    // Event listener para enviar el formulario de pedido
+    document.getElementById('takeOrderForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const userId = document.getElementById('orderUser').value;
+        const clientId = document.getElementById('orderClient').value;
+        const propina = parseFloat(document.getElementById('orderTip').value);
+
+        const orderData = {
+            userId,
+            clientId,
+            items: orderItems,
+            propina
+        };
+
+        fetch('http://localhost:8080/pedidos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudo crear el pedido');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Pedido creado:', data);
+            // Limpiar el formulario y la tabla de ítems del pedido
+            document.getElementById('takeOrderForm').reset();
+            orderItems = [];
+            updateOrderItemsTable();
+        })
+        .catch(error => console.error('Error al crear el pedido:', error));
+    });
+});
