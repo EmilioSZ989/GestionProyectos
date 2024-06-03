@@ -68,7 +68,6 @@
         </section>
 
         
-        <!-- Sección para gestionar usuarios -->
         <section id="manageUsersSection" class="hidden">
             <h2>Gestionar Usuarios</h2>
             <button id="getAllUsersBtn">Obtener Todos los Usuarios</button>
@@ -89,8 +88,39 @@
                 </select>
                 <button type="submit">Crear Usuario</button>
             </form>
-            <!-- Resto del contenido -->
+            <form id="editUserForm">
+                <h3>Editar Usuario</h3>
+                <label for="editUserId">Seleccionar Usuario:</label>
+                <select id="editUserId" name="userId" required>
+                    <!-- Opciones de usuario se agregarán dinámicamente aquí -->
+                </select>
+                <label for="editUserName">Nombre:</label>
+                <input type="text" id="editUserName" name="nombreUsuario" required>
+                <label for="editUserSurname">Apellido:</label>
+                <input type="text" id="editUserSurname" name="apellidoUsuario" required>
+                <label for="editUserEmail">Correo:</label>
+                <input type="email" id="editUserEmail" name="correo" required>
+                <label for="editUserPassword">Contraseña:</label>
+                <input type="password" id="editUserPassword" name="contrasena" required>
+                <label for="editUserType">Tipo de Usuario:</label>
+                <select id="editUserType" name="tipoUsuario.idTipoUsuario" required>
+                    <option value="1">Administrador</option>
+                    <option value="2">Mesero</option>
+                </select>
+                <button type="submit">Editar Usuario</button>
+            </form>
+            <form id="deleteUserForm">
+                <h3>Eliminar Usuario</h3>
+                <label for="deleteUserId">Seleccionar Usuario:</label>
+                <select id="deleteUserId" name="userId" required>
+                    <!-- Opciones de usuario se agregarán dinámicamente aquí -->
+                </select>
+                <button type="submit">Eliminar Usuario</button>
+            </form>
+            <div id="usersArea"></div>
+
         </section>
+        
         
         <section id="manageMenuSection" class="hidden">
             <h2>Gestionar Menú</h2>

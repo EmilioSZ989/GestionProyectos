@@ -14,4 +14,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     
     @Query("SELECT p FROM Pedido p WHERE p.fechaPedido BETWEEN :inicio AND :fin")
     List<Pedido> findByFechaPedidoBetween(@Param("inicio") LocalDate inicio, @Param("fin") LocalDate fin);
+    
+    
 }

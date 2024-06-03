@@ -145,19 +145,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     const getAllUsersBtn = document.getElementById("getAllUsersBtn");
-    const createUserForm = document.getElementById("createUserForm");
-    const editUserForm = document.getElementById("editUserForm");
-    const deleteUserForm = document.getElementById("deleteUserForm");
     const usersArea = document.getElementById("usersArea");
 
     getAllUsersBtn.addEventListener("click", function () {
         fetch("http://localhost:8080/usuarios")
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener usuarios');
+                }
+                return response.json();
+            })
             .then(data => {
-                usersArea.innerHTML = JSON.stringify(data, null, 2);
+                // Limpiar el área de usuarios antes de agregar nuevos usuarios
+                usersArea.innerHTML = '';
+                // Iterar sobre los usuarios y mostrar cada uno
+                data.forEach(user => {
+                    const userDiv = document.createElement('div');
+                    userDiv.innerHTML = `
+                        <p><strong>ID:</strong> ${user.idUsuario}</p>
+                        <p><strong>Nombre:</strong> ${user.nombreUsuario}</p>
+                        <p><strong>Apellido:</strong> ${user.apellidoUsuario}</p>
+                        <p><strong>Correo:</strong> ${user.correo}</p>
+                        <p><strong>Tipo de Usuario:</strong> ${user.tipoUsuario.tipoUsuario}</p>
+                    `;
+                    usersArea.appendChild(userDiv);
+                });
             })
             .catch(error => console.error("Error al obtener usuarios:", error));
     });
+
 
     createUserForm.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -211,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteUserForm.addEventListener("submit", function (event) {
         event.preventDefault();
         const id = document.getElementById("deleteUserId").value;
-
+    
         fetch(`http://localhost:8080/usuarios/${id}`, {
             method: "DELETE"
         })
@@ -220,11 +236,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Usuario eliminado con éxito!");
                 deleteUserForm.reset();
             } else {
-                alert("Error al eliminar usuario.");
+                return response.json();
+            }
+        })
+        .then(data => {
+            if (data && data.error) {
+                alert(`Error al eliminar usuario: ${data.error}`);
             }
         })
         .catch(error => console.error("Error al eliminar usuario:", error));
     });
+    
 });
 
 
@@ -348,6 +370,38 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// Obtener usuarios y llenar los selectores correspondientes
+function fetchUsersAndPopulateSelects() {
+    fetch('http://localhost:8080/usuarios')
+        .then(response => response.json())
+        .then(data => {
+            const editUserIdSelect = document.getElementById('editUserId');
+            const deleteUserIdSelect = document.getElementById('deleteUserId');
+
+            // Limpiar selectores antes de agregar nuevas opciones
+            editUserIdSelect.innerHTML = '';
+            deleteUserIdSelect.innerHTML = '';
+
+            // Recorrer los usuarios y agregar opciones a los selectores
+            data.forEach(usuario => {
+                // Crear opción para editar usuario
+                const editOption = document.createElement('option');
+                editOption.value = usuario.idUsuario;
+                editOption.text = `${usuario.nombreUsuario} ${usuario.apellidoUsuario}`;
+                editUserIdSelect.appendChild(editOption);
+
+                // Crear opción para eliminar usuario
+                const deleteOption = document.createElement('option');
+                deleteOption.value = usuario.idUsuario;
+                deleteOption.text = `${usuario.nombreUsuario} ${usuario.apellidoUsuario}`;
+                deleteUserIdSelect.appendChild(deleteOption);
+            });
+        })
+        .catch(error => console.error('Error fetching users:', error));
+}
+
+// Llamar a la función para obtener y mostrar los usuarios al cargar la página
+fetchUsersAndPopulateSelects();
 
 // Función para obtener todas las categorías de menú
 function getAllCategories() {
