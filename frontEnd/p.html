@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Mesas</title>
+</head>
+<body>
+    <section id="manageTablesSection">
+        <h2>Gestionar Mesas y Pedidos</h2>
+        <button id="getAllTablesBtn">Obtener Todas las Mesas</button>
+        <form id="createTableForm">
+            <h3>Crear Mesa</h3>
+            <label for="createTableName">Nombre:</label>
+            <input type="text" id="createTableName" name="nombreMesa" required>
+            <button type="submit">Crear Mesa</button>
+        </form>
+        <form id="editTableForm">
+            <h3>Editar Mesa</h3>
+            <label for="editTableId">ID de la Mesa:</label>
+            <input type="number" id="editTableId" name="id" required>
+            <label for="editTableName">Nombre:</label>
+            <input type="text" id="editTableName" name="nombreMesa" required>
+            <button type="submit">Editar Mesa</button>
+        </form>
+        <form id="deleteTableForm">
+            <h3>Eliminar Mesa</h3>
+            <label for="deleteTableId">ID de la Mesa:</label>
+            <input type="number" id="deleteTableId" name="id" required>
+            <button type="submit">Eliminar Mesa</button>
+        </form>
+        <div id="tablesArea">
+            <!-- Aquí se mostrarán las mesas -->
+        </div>
+    </section>
+
+    <script>
+        // Función para obtener todas las mesas
+        function getAllTables() {
+            fetch('http://localhost:8080/mesas')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('No se pudieron obtener las mesas');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const tablesArea = document.getElementById('tablesArea');
+                    tablesArea.innerHTML = ''; // Limpiar el contenido actual de las mesas
+                    data.forEach(mesa => {
+                        const mesaElement = document.createElement('div');
+                        mesaElement.textContent = `ID: ${mesa.id}, Nombre: ${mesa.nombreMesa}`;
+                        tablesArea.appendChild(mesaElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener las mesas:', error);
+                });
+        }
+
+        // Función para crear una nueva mesa
+        function createTable(tableData) {
+            fetch('http://localhost:8080/mesas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tableData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo crear la mesa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Mesa creada:', data);
+                getAllTables(); // Actualizar la lista de mesas
+            })
+            .catch(error => {
+                console.error('Error al crear la mesa:', error);
+            });
+        }
+
+        // Función para editar una mesa existente
+        function editTable(tableId, tableData) {
+            fetch(`http://localhost:8080/mesas/${tableId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tableData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo editar la mesa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Mesa editada:', data);
+                getAllTables(); // Actualizar la lista de mesas
+            })
+            .catch(error => {
+                console.error('Error al editar la mesa:', error);
+            });
+        }
+
+        // Función para eliminar una mesa existente
+        function deleteTable(tableId) {
+            fetch(`http://localhost:8080/mesas/${tableId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo eliminar la mesa');
+                }
+                console.log('Mesa eliminada');
+                getAllTables(); // Actualizar la lista de mesas
+            })
+            .catch(error => {
+                console.error('Error al eliminar la mesa:', error);
+            });
+        }
+
+        // Event listener para obtener todas las mesas al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            getAllTables();
+        });
+
+        // Event listener para obtener todas las mesas al hacer clic en el botón
+        document.getElementById('getAllTablesBtn').addEventListener('click', function() {
+            getAllTables();
+        });
+
+        // Event listener para crear una mesa al enviar el formulario
+        document.getElementById('createTableForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const tableName = document.getElementById('createTableName').value;
+            createTable({ nombreMesa: tableName });
+        });
+
+        // Event listener para editar una mesa al enviar el formulario
+        document.getElementById('editTableForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const tableId = document.getElementById('editTableId').value;
+            const tableName = document.getElementById('editTableName').value;
+            editTable(tableId, { nombreMesa: tableName });
+        });
+
+        // Event listener para eliminar una mesa al enviar el formulario
+        document.getElementById('deleteTableForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const tableId = document.getElementById('deleteTableId').value;
+            deleteTable(tableId);
+        });
+    </script>
+</body>
+</html>
