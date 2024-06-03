@@ -95,7 +95,7 @@ main {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 30px;
-    background-image: url("../images/parrilla.jpg");
+    background-image: url("/images/parrilla.jpg");
     background-size: contain; /* Asegura que la imagen se ajuste dentro del área */
     background-position: center; /* Centra la imagen */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
