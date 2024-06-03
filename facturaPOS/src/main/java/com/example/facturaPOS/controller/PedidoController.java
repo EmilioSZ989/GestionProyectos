@@ -73,7 +73,7 @@ public class PedidoController {
         BigDecimal porcentajePropina = propinaRequest.getPorcentajePropina();
         BigDecimal subtotal = pedido.getSubtotal();
 
-        BigDecimal propina = subtotal.multiply(porcentajePropina).divide(BigDecimal.valueOf(100));
+        BigDecimal propina = subtotal.multiply(porcentajePropina).divide(BigDecimal.valueOf(1));
 
         // Calcular total con propina
         BigDecimal totalConPropina = subtotal.add(propina);

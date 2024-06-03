@@ -74,7 +74,7 @@ public class PedidoService {
         BigDecimal iva = subtotal.multiply(ivaPorcentaje).divide(BigDecimal.valueOf(1)); // Calcula el IVA basado en el porcentaje configurado
         
         // Calcular propina
-        BigDecimal propina = subtotal.multiply(porcentajePropina.divide(BigDecimal.valueOf(100))); // Calcula la propina basada en el porcentaje proporcionado
+        BigDecimal propina = subtotal.multiply(porcentajePropina.divide(BigDecimal.valueOf(1))); // Calcula la propina basada en el porcentaje proporcionado
 
         // Calcular total
         BigDecimal total = subtotal.add(iva).add(propina);

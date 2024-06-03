@@ -1,200 +1,221 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mesero - Sistema POS</title>
-        <link rel="stylesheet" href="css/mesero.css">
-    </head>
-    <body>
-        <!-- Navbar -->
-        <nav>
-            <div class="navbar">
-                <h1>Restaurant POS - Mesero</h1>
-                <button id="logoutBtn">Cerrar sesión</button>
-            </div>
-        </nav>
-        
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h2>Menú de Mesero</h2>
-            <ul>
-                <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
-                <li><a href="#" id="takeOrderBtn">Tomar Pedido</a></li>
-                <li><a href="#" id="calculateTipBtn">Calcular Propina</a></li>
-                <li><a href="#" id="processPaymentBtn">Procesar Pagos</a></li>
-                <li><a href="#" id="registerClientInfoBtn">Registrar Información del Cliente</a></li>
-                <li><a href="#" id="generateInvoiceBtn">Generar Factura</a></li>
-            </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesero - Sistema POS</title>
+    <link rel="stylesheet" href="css/mesero.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="navbar">
+            <h1>Restaurant POS - Mesero</h1>
+            <button id="logoutBtn">Cerrar sesión</button>
         </div>
+    </nav>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Menú de Mesero</h2>
+        <ul>
+            <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
+            <li><a href="#" id="takeOrderBtn">Tomar Pedido</a></li>
+            <li><a href="#" id="calculateTipBtn">Calcular Propina</a></li>
+            <li><a href="#" id="processPaymentBtn">Procesar Pagos</a></li>
+            <li><a href="#" id="registerClientInfoBtn">Registrar Información del Cliente</a></li>
+            <li><a href="#" id="generateInvoiceBtn">Generar Factura</a></li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Sección para gestionar mesas y pedidos -->
+        <section id="manageTablesSection" class="hidden">
+            <h2>Gestionar Mesas y Pedidos</h2>
+            <button id="getAllTablesBtn">Obtener Todas las Mesas</button>
+            <form id="createTableForm">
+                <h3>Crear Mesa</h3>
+                <label for="createTableEstado">Estado:</label>
+                <select id="createTableEstado" name="estadoMesa" required>
+                    <option value="1">Disponible</option>
+                    <option value="2">Ocupado</option>
+                </select>
+                <button type="submit">Crear Mesa</button>
+            </form>
+            <form id="editTableForm">
+                <h3>Editar Mesa</h3>
+                <label for="editTableId">ID de la Mesa:</label>
+                <select id="editTableId" name="id" required>
+                    <!-- Opciones de mesas generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="editTableEstado">Estado:</label>
+                <select id="editTableEstado" name="estadoMesa" required>
+                    <option value="1">Disponible</option>
+                    <option value="2">Ocupado</option>
+                </select>
+                <button type="submit">Editar Mesa</button>
+            </form>
+            <form id="deleteTableForm">
+                <h3>Eliminar Mesa</h3>
+                <label for="deleteTableId">ID de la Mesa:</label>
+                <select id="deleteTableId" name="id" required>
+                    <!-- Opciones de mesas generadas dinámicamente por JavaScript -->
+                </select>
+                <button type="submit">Eliminar Mesa</button>
+            </form>
+            <div id="tablesArea">
+                <!-- Aquí se mostrarán las mesas -->
+            </div>
+        </section>
         
-        <!-- Main Content -->
-        <main>
-            <!-- Sección para gestionar mesas y pedidos -->
-            <section id="manageTablesSection" class="hidden">
-                <h2>Gestionar Mesas y Pedidos</h2>
-                <button id="getAllTablesBtn">Obtener Todas las Mesas</button>
-                <form id="createTableForm">
-                    <h3>Crear Mesa</h3>
-                    <label for="createTableEstado">Estado:</label>
-                    <select id="createTableEstado" name="estadoMesa" required>
-                        <option value="1">Disponible</option>
-                        <option value="2">Ocupado</option>
-                    </select>
-                    <button type="submit">Crear Mesa</button>
-                </form>
-                <form id="editTableForm">
-                    <h3>Editar Mesa</h3>
-                    <label for="editTableId">ID de la Mesa:</label>
-                    <select id="editTableId" name="id" required>
-                        <!-- Opciones de mesas generadas dinámicamente por JavaScript -->
-                    </select>
-                    <label for="editTableEstado">Estado:</label>
-                    <select id="editTableEstado" name="estadoMesa" required>
-                        <option value="1">Disponible</option>
-                        <option value="2">Ocupado</option>
-                    </select>
-                    <button type="submit">Editar Mesa</button>
-                </form>
-                <form id="deleteTableForm">
-                    <h3>Eliminar Mesa</h3>
-                    <label for="deleteTableId">ID de la Mesa:</label>
-                    <select id="deleteTableId" name="id" required>
-                        <!-- Opciones de mesas generadas dinámicamente por JavaScript -->
-                    </select>
-                    <button type="submit">Eliminar Mesa</button>
-                </form>
-                <div id="tablesArea">
-                    <!-- Aquí se mostrarán las mesas -->
-                </div>
-            </section>
-            
-            <!-- Sección para tomar pedidos -->
-            <section id="takeOrderSection" class="hidden">
-                <h2>Tomar Pedido</h2>
-                <form id="takeOrderForm">
-                    <h3>Crear Pedido</h3>
+        <!-- Sección para tomar pedidos -->
+        <section id="takeOrderSection" class="hidden">
+            <h2>Tomar Pedido</h2>
+            <form id="takeOrderForm">
+                <h3>Datos del Pedido</h3>
+                <div class="form-group">
                     <label for="orderUser">Usuario que realizó el Pedido:</label>
                     <select id="orderUser" name="userId" required>
                         <!-- Opciones de usuarios generadas dinámicamente por JavaScript -->
                     </select>
+                </div>
+                <div class="form-group">
                     <label for="orderClient">Cliente:</label>
                     <select id="orderClient" name="clientId" required>
                         <!-- Opciones de clientes generadas dinámicamente por JavaScript -->
                     </select>
-                    <label for="orderItems">Ítems del Pedido:</label>
-                    <textarea id="orderItems" name="orderItems" required></textarea>
+                </div>
+                <div class="form-group">
                     <label for="orderTip">Propina (%):</label>
                     <input type="number" id="orderTip" name="propina" step="0.01" required>
-                    <button type="submit">Enviar Pedido</button>
-                </form>
-                
-                <form id="updateOrderStatusForm">
-                    <h3>Actualizar Estado del Pedido</h3>
-                    <label for="updateOrderId">ID del Pedido:</label>
-                    <select id="updateOrderId" name="idPedido" required>
-                        <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
-                    </select>
-                    <label for="orderStatus">Estado del Pedido:</label>
-                    <select id="orderStatus" name="estadoPedido" required>
-                        <option value="pendiente">Pendiente</option>
-                        <option value="preparacion">En Preparación</option>
-                        <option value="listo">Listo</option>
-                        <option value="servido">Servido</option>
-                    </select>
-                    <button type="submit">Actualizar Estado</button>
-                </form>
-                
-                <form id="assignOrderToTableForm">
-                    <h3>Asignar Pedido a Mesa</h3>
-                    <label for="assignOrderId">ID del Pedido:</label>
-                    <select id="assignOrderId" name="idPedido" required>
-                        <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
-                    </select>
-                    <label for="assignTableId">ID de la Mesa:</label>
-                    <select id="assignTableId" name="idMesa" required>
-                        <!-- Opciones de mesas generadas dinámicamente por JavaScript -->
-                    </select>
-                    <button type="submit">Asignar a Mesa</button>
-                </form>
-            </section>
-            
-            <!-- Sección para calcular propina -->
-            <section id="calculateTipSection" class="hidden">
-                <h2>Calcular Propina</h2>
-                <form id="calculateTipForm">
-                    <label for="calculateTipOrderId">ID del Pedido:</label>
-                    <select id="calculateTipOrderId" name="idPedido" required>
-                        <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
-                    </select>
-                    <label for="tipPercentage">Porcentaje de Propina (%):</label>
-                    <input type="number" id="tipPercentage" name="porcentajePropina" step="0.01" required>
-                    <button type="submit">Calcular Propina</button>
-                </form>
-                <div id="tipArea">
-                    <!-- Aquí se mostrarán los resultados de la propina calculada -->
                 </div>
-            </section>
-            
-            <!-- Sección para procesar pagos -->
-            <section id="processPaymentSection" class="hidden">
-                <h2>Procesar Pagos</h2>
-                <form id="processPaymentForm">
-                    <label for="invoiceId">ID de la Factura:</label>
-                    <select id="invoiceId" name="idFactura" required>
-                        <!-- Opciones de facturas generadas dinámicamente por JavaScript -->
-                    </select>
-                    <label for="paymentAmount">Cantidad Recibida:</label>
-                    <input type="number" id="paymentAmount" name="cantidadRecibida" required>
-                    <label for="paymentType">Tipo de Pago:</label>
-                    <select id="paymentType" name="idTipoPago" required>
-                        <option value="1">Transferencia</option>
-                        <option value="2">Efectivo</option>
-                        <option value="3">Tarjeta</option>
-                    </select>
-                    <button type="submit">Procesar Pago</button>
-                </form>
-                <div id="paymentArea">
-                    <!-- Aquí se mostrarán los pagos procesados -->
-                </div>
-            </section>
-            
-            <!-- Sección para registrar información del cliente -->
-            <section id="registerClientInfoSection" class="hidden">
-                <h2>Registrar Información del Cliente</h2>
-                <form id="registerClientForm">
-                    <label for="clientName">Nombre:</label>
-                    <input type="text" id="clientName" name="nombreCliente" required>
-                    <label for="clientEmail">Correo:</label>
-                    <input type="email" id="clientEmail" name="correoCliente" required>
-                    <button type="submit">Registrar Cliente</button>
-                </form>
-                <div id="clientsArea">
-                    <!-- Aquí se mostrarán los clientes registrados -->
-                </div>
-            </section>
-            
-            <!-- Sección para generar factura -->
-            <section id="generateInvoiceSection" class="hidden">
-                <h2>Generar Factura</h2>
-                <form id="generateInvoiceForm">
-                    <label for="invoiceOrderId">ID del Pedido:</label>
-                    <select id="invoiceOrderId" name="idPedido" required>
-                        <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
-                    </select>
-                    <button type="submit">Generar Factura</button>
-                </form>
-                <div id="invoiceArea">
-                    <!-- Aquí se mostrarán las facturas generadas -->
-                </div>
-            </section>
-        </main>
         
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2024 Restaurant POS</p>
-        </footer>
+                <h3>Ítems del Pedido</h3>
+                <div id="orderItemsContainer">
+                    <!-- Aquí se agregarán dinámicamente los ítems -->
+                </div>
+                <button type="button" id="addItemBtn">Agregar Ítem</button>
+        
+                <button type="submit">Enviar Pedido</button>
+            </form>
+            
+            
+            <form id="updateOrderStatusForm">
+                <h3>Actualizar Estado del Pedido</h3>
+                <label for="updateOrderId">ID del Pedido:</label>
+                <select id="updateOrderId" name="idPedido" required>
+                    <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="orderStatus">Estado del Pedido:</label>
+                <select id="orderStatus" name="estadoPedido" required>
+                    <option value="1">Pendiente</option>
+                    <option value="2">Completado</option>
+                </select>
+                <button type="submit">Actualizar Estado</button>
+            </form>
+            
+            <form id="assignOrderToTableForm">
+                <h3>Asignar Pedido a Mesa</h3>
+                <label for="assignOrderId">ID del Pedido:</label>
+                <select id="assignOrderId" name="idPedido" required>
+                    <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="assignTableId">ID de la Mesa:</label>
+                <select id="assignTableId" name="idMesa" required>
+                    <!-- Opciones de mesas generadas dinámicamente por JavaScript -->
+                </select>
+                <button type="submit">Asignar a Mesa</button>
+            </form>
+            
+            
+        </section>
+        
+        <!-- Sección para calcular propina -->
+        <section id="calculateTipSection" class="hidden">
+            <h2>Calcular Propina</h2>
+            <form id="calculateTipForm">
+                <label for="calculateTipOrderId">ID del Pedido:</label>
+                <select id="calculateTipOrderId" name="idPedido" required>
+                    <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="tipPercentage">Porcentaje de Propina (%):</label>
+                <input type="number" id="tipPercentage" name="porcentajePropina" step="0.01" required>
+                <button type="submit">Calcular Propina</button>
+            </form>
+            <div id="tipArea">
+                <!-- Aquí se mostrarán los resultados de la propina calculada -->
+            </div>
+        </section>
+        
+        <!-- Sección para procesar pagos -->
+        <section id="processPaymentSection" class="hidden">
+            <h2>Procesar Pagos</h2>
+            <form id="processPaymentForm">
+                <label for="invoiceId">ID de la Factura:</label>
+                <select id="invoiceId" name="idFactura" required>
+                    <!-- Opciones de facturas generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="paymentAmount">Cantidad Recibida:</label>
+                <input type="number" id="paymentAmount" name="cantidadRecibida" required>
+                <label for="paymentType">Tipo de Pago:</label>
+                <select id="paymentType" name="idTipoPago" required>
+                    <option value="1">Transferencia</option>
+                    <option value="2">Efectivo</option>
+                    <option value="3">Tarjeta</option>
+                </select>
+                <button type="submit">Procesar Pago</button>
+            </form>
+            <div id="paymentArea">
+                <!-- Aquí se mostrarán los pagos procesados -->
+            </div>
+        </section>
+        
+        <!-- Sección para registrar información del cliente -->
+        <section id="registerClientInfoSection" class="hidden">
+            <h2>Registrar Información del Cliente</h2>
+            <form id="registerClientForm">
+                <label for="clientName">Nombre:</label>
+                <input type="text" id="clientName" name="nombreCliente" required>
+                <label for="clientLastName">Apellido:</label>
+                <input type="text" id="clientLastName" name="apellidoCliente" required>
+                <label for="clientPhone">Teléfono:</label>
+                <input type="text" id="clientPhone" name="telefonoCliente" required>
+                <label for="clientAddress">Dirección:</label>
+                <input type="text" id="clientAddress" name="direccionCliente" required>
+                <button type="submit">Registrar Cliente</button>
+            </form>
+            <div id="clientsArea">
+                <!-- Aquí se mostrarán los clientes registrados -->
+            </div>
+        </section>
+        
+        <!-- Sección para generar factura -->
+        <section id="generateInvoiceSection" class="hidden">
+            <h2>Generar Factura</h2>
+            <form id="generateInvoiceForm">
+                <label for="invoiceOrderId">ID del Pedido:</label>
+                <select id="invoiceOrderId" name="idPedido" required>
+                    <!-- Opciones de pedidos generadas dinámicamente por JavaScript -->
+                </select>
+                <label for="invoiceTypeId">Tipo de Factura:</label>
+                <select id="invoiceTypeId" name="idTipoFactura" required>
+                    <option value="1">Digital</option>
+                    <option value="2">Física</option>
+                </select>
+                <button type="submit">Generar Factura</button>
+            </form>
+            <div id="invoiceArea">
+                <!-- Aquí se mostrarán las facturas generadas -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Restaurant POS</p>
+    </footer>
 
-        <script src="js/mesero.js"></script>
-    </body>
-    </html>
+    <script src="js/mesero.js"></script>
+</body>
+</html>
