@@ -70,3 +70,33 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error during login:', error));
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const imgGaleria = document.querySelectorAll('.img-galeria');
+    const imgLight = document.querySelector('.img-light');
+    const agregarImagen = document.querySelector('.agregar-imagen');
+    const closeBtn = document.querySelector('.close');
+
+    imgGaleria.forEach(img => {
+        img.addEventListener('click', () => {
+            const imgSrc = img.getAttribute('src');
+            agregarImagen.src = imgSrc;
+            imgLight.classList.add('show');
+            agregarImagen.classList.add('showImage');
+            // Establecer tamaño inicial máximo para la imagen ampliada
+            agregarImagen.style.maxWidth = "80vw";
+            agregarImagen.style.maxHeight = "80vh";
+        });
+    });
+
+    imgLight.addEventListener('click', (e) => {
+        if (e.target !== agregarImagen && e.target !== closeBtn) {
+            imgLight.classList.remove('show');
+            agregarImagen.classList.remove('showImage');
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        imgLight.classList.remove('show');
+        agregarImagen.classList.remove('showImage');
+    });
+});
