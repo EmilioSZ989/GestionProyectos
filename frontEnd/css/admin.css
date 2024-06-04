@@ -215,7 +215,7 @@ button:hover {
 }
 /* Estilo del contenedor principal */
 #manageTablesSection {
-    max-width: 800px;
+    max-width: 400px; /* Reducir el ancho máximo */
     width: 100%;
     margin: 20px auto; /* Centrar horizontalmente */
     background: #dd6a1e; /* Color de fondo modificado */
