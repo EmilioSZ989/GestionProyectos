@@ -278,16 +278,22 @@ button.alt:hover {
 }
 
 /* Estilo de formularios */
+/* Centrar formularios */
 form {
-    margin: 20px 0;
-    padding: 20px;
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
-    background: #061323; /* Fondo similar al de la imagen */
-    text-align: left;
-    max-width: 400px; /* Asegurar que el formulario sea pequeño */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto; /* Centrar horizontalmente */
 }
 
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto; /* Centrar horizontalmente */
+}
 label {
     display: block;
     margin-bottom: 5px;
@@ -351,4 +357,8 @@ textarea {
 /* Espaciado adicional para formularios */
 form > *:not(label) {
     margin-top: 10px;
+}
+/* Estilo específico para el encabezado h3 en el formulario Crear Usuario */
+h3 {
+    color: white;
 }
