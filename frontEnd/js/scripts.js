@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Fetch menu items from the backend
+    // Función para obtener los elementos del menú desde el backend
     fetch('http://localhost:8080/menu')
         .then(response => response.json())
         .then(data => {
@@ -18,25 +18,29 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error fetching menu items:', error));
 
-    // Login modal functionality
+    // Funcionalidad del modal de inicio de sesión
     const loginBtn = document.getElementById('loginBtn');
     const loginModal = document.getElementById('loginModal');
     const closeBtn = document.querySelector('.close');
 
+    // Función para abrir el modal al hacer clic en el botón de inicio de sesión
     loginBtn.addEventListener('click', () => {
         loginModal.style.display = 'block';
     });
 
+    // Función para cerrar el modal al hacer clic en la "x"
     closeBtn.addEventListener('click', () => {
         loginModal.style.display = 'none';
     });
 
+    // Función para cerrar el modal al hacer clic fuera de él
     window.addEventListener('click', (event) => {
         if (event.target == loginModal) {
             loginModal.style.display = 'none';
         }
     });
 
+    // Funcionalidad del formulario de inicio de sesión
     const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -69,12 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error during login:', error));
     });
-});
-document.addEventListener('DOMContentLoaded', function() {
+
+    // Funcionalidad de la galería de imágenes
     const imgGaleria = document.querySelectorAll('.img-galeria');
     const imgLight = document.querySelector('.img-light');
     const agregarImagen = document.querySelector('.agregar-imagen');
-    const closeBtn = document.querySelector('.close');
 
     imgGaleria.forEach(img => {
         img.addEventListener('click', () => {
@@ -82,8 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
             agregarImagen.src = imgSrc;
             imgLight.classList.add('show');
             agregarImagen.classList.add('showImage');
-            // Establecer tamaño inicial máximo para la imagen ampliada
-            agregarImagen.style.maxWidth = "80vw";
+            agregarImagen.style.maxWidth = "80vw"; // Establecer tamaño máximo inicial para la imagen ampliada
             agregarImagen.style.maxHeight = "80vh";
         });
     });

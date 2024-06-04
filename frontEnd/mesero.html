@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesero - Sistema POS</title>
-    <link rel="stylesheet" href="css/mesero.css">
+    <link rel="stylesheet" href="css/mesero.css"> <!-- Usando los mismos estilos que para la página de administrador -->
 </head>
 <body>
     <!-- Navbar -->
     <nav>
         <div class="navbar">
-            <h1>Restaurant POS - Mesero</h1>
+            <img src="../../images/logo.png" alt="Palogrande Restaurant Logo" class="logo">
+            <h1>Mesero</h1> <!-- Cambiando el título -->
             <button id="logoutBtn">Cerrar sesión</button>
+
         </div>
     </nav>
     
@@ -19,12 +21,13 @@
     <div class="sidebar">
         <h2>Menú de Mesero</h2>
         <ul>
-            <li><a href="#" id="manageTablesBtn">Gestionar Mesas y Pedidos</a></li>
+            <li><a href="#" id="manageTablesBtn" class="active">Gestionar Mesas y Pedidos</a></li>
             <li><a href="#" id="takeOrderBtn">Tomar Pedido</a></li>
             <li><a href="#" id="calculateTipBtn">Calcular Propina</a></li>
             <li><a href="#" id="processPaymentBtn">Procesar Pagos</a></li>
             <li><a href="#" id="registerClientInfoBtn">Registrar Información del Cliente</a></li>
             <li><a href="#" id="generateInvoiceBtn">Generar Factura</a></li>
+            <img src="/images/logoAdmin.png">
         </ul>
     </div>
     
@@ -213,9 +216,9 @@
     
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Restaurant POS</p>
+        <p>&copy; Palogrande Restaurant</p> <!-- Manteniendo el mismo pie de página -->
     </footer>
 
-    <script src="js/mesero.js"></script>
+    <script src="js/mesero.js"></script> <!-- Manteniendo el mismo script -->
 </body>
 </html>

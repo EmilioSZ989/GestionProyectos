@@ -4,11 +4,12 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f2f2f2;
-    overflow-x: hidden;
-    background-image: url('../images/fondoAdmin.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+    overflow-x: hidden; /* Evitar desbordamiento horizontal */
+    background-image: url('../images/fondoAdmin.jpg'); /* Añadir la imagen de fondo */
+    background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el área */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    background-position: center center; /* Centrar la imagen */
+    background-attachment: fixed; /* Fijar la imagen de fondo para que no se desplace con el scroll */
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -22,6 +23,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; /* Añadir posición relativa para gestionar z-index */
+    z-index: 102; /* Asegurar que esté por encima del contenido del menú lateral */
+}
+
+.navbar h1 {
+    margin: 0;
 }
 
 .navbar button {
@@ -30,7 +37,14 @@ body {
     border: none;
     padding: 10px 20px;
     font-size: 16px;
+    margin: 4px 2px;
     cursor: pointer;
+}
+
+.logo {
+    width: 50px; /* Ajusta el tamaño del logo según sea necesario */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin-right: 10px; /* Espacio entre el logo y el título */
 }
 
 /* Sidebar */
@@ -40,14 +54,51 @@ body {
     width: 250px;
     padding: 80px 20px 20px 20px;
     box-sizing: border-box;
-    overflow-y: auto;
-    background-image: url('../images/fondoo.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    transition: all 0.3s ease;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0; /* Fijar el borde inferior */
+    overflow-y: auto; /* Agregar barra de desplazamiento vertical si es necesario */
+    z-index: 101; /* Asegurar que esté por debajo del navbar y el footer */
+    background-image: url('../images/fondoo.jpg'); /* Añadir la imagen de fondo */
+    background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el área */
+    background-repeat: no-repeat; /* No repetir la imagen */
+    background-position: center center; /* Centrar la imagen */
+    transition: all 0.3s ease; /* Añadir transición para suavizar los cambios */
 }
 
+.sidebar h2 {
+    margin-top: 0;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    color: #061323;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #061323;
+}
+.sidebar img {
+    display: block; /* Asegurar que la imagen sea un elemento de bloque */
+    margin: 0 auto; /* Centrar horizontalmente la imagen */
+    max-width: 100%; /* Ajustar el ancho máximo de la imagen para que se ajuste al contenedor */
+    height: auto; /* Permitir que la altura se ajuste automáticamente para mantener la proporción */
+    padding: 20px 0; /* Agregar un espacio alrededor de la imagen para separarla de los elementos de la lista */
+}
 /* Main Content */
 main {
     margin-left: 250px;

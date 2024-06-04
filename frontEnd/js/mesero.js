@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Otros códigos...
+    
+    // Event listener para el botón de cerrar sesión
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+        // Redireccionar al index.html
+        window.location.href = 'index.html'; // Cambia 'index.html' al nombre de tu página de inicio si es diferente
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    
+    
     const sections = document.querySelectorAll('section');
     
     function hideAllSections() {
@@ -789,3 +800,4 @@ document.getElementById('processPaymentBtn').addEventListener('click', function(
     });
                         
 });
+
