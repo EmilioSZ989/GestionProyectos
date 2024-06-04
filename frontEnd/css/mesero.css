@@ -5,7 +5,7 @@ body {
     padding: 0;
     background-color: #f2f2f2;
     overflow-x: hidden; /* Evitar desbordamiento horizontal */
-    background-image: url('../images/fondoAdmin.jpg'); /* Añadir la imagen de fondo */
+    background-image: url('/images/fondoMesero.jpg'); /* Añadir la imagen de fondo */
     background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el área */
     background-repeat: no-repeat; /* No repetir la imagen */
     background-position: center center; /* Centrar la imagen */
@@ -90,7 +90,9 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: #061323;
+    color: #ffffff; /* Cambiar el color del texto a blanco al pasar el cursor */
+    background-color: #061323; /* Cambiar el color de fondo al pasar el cursor */
+
 }
 .sidebar img {
     display: block; /* Asegurar que la imagen sea un elemento de bloque */
@@ -120,62 +122,262 @@ footer {
 /* Hidden sections */
 .hidden {
     display: none;
+
 }
 
-/* Forms */
-form {
-    margin: 20px 0;
+/* Estilo del área de tablas */
+#tablesArea {
+    margin-top: 30px;
     padding: 20px;
-    border: 1px solid #dee2e6;
+    background: #efeae9;
     border-radius: 10px;
-    background: #f8f9fa;
     text-align: left;
 }
 
-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #495057;
-    margin-top: 15px;
+#tablesArea div {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
 }
 
-form input[type="text"],
-form input[type="email"],
-form textarea,
-form input[type="number"] {
+#tablesArea div:nth-child(even) {
+    background: #f5f3f1;
+}
+/* Estilo de los botones */
+button,
+input[type="submit"] {
+    background-color: #6d87fc;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 10px 5px;
+    display: inline-block;
+    min-width: 150px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+button.alt {
+    background-color: #ffd700;
+    color: #061323;
+}
+
+button.alt:hover {
+    background-color: #061323;
+    color: #ffd700;
+    transform: translateY(-2px);
+}
+
+/* Estilo del contenedor principal */
+#manageTablesSection {
+    max-width: 400px; /* Cambiar el ancho máximo para hacer el contenedor más pequeño */
+    width: 100%;
+    margin: 20px auto;
+    background: #1a1a2e; /* Fondo oscuro */
+    padding: 30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    text-align: center;
+    color: #fff; /* Color del texto blanco */
+}
+
+#manageTablesSection h2 {
+    color: #fff; /* Color del texto blanco */
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#manageTablesSection h3 {
+    color: #adb5bd; /* Texto en gris claro */
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Estilo del contenedor organizado */
+#manageTablesSection .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+#manageTablesSection .container > div {
+    background: #162447; /* Fondo oscuro */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    color: #fff;
+    flex: 1 1 calc(100% - 20px);
+    box-sizing: border-box;
+    max-width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#manageTablesSection .container > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+#manageTablesSection .container > div img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#manageTablesSection .container > div:nth-child(even) {
+    background: #1f4068; /* Fondo oscuro alternativo */
+}
+
+/* Estilo del área de tablas */
+#tablesArea {
+    margin-top: 30px;
+    padding: 20px;
+    background: #1a1a2e; /* Fondo oscuro */
+    border-radius: 10px;
+    text-align: left;
+}
+
+#tablesArea div {
+    background: #162447; /* Fondo oscuro */
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#tablesArea div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+#tablesArea div:nth-child(even) {
+    background: #1f4068; /* Fondo oscuro alternativo */
+}
+
+/* Estilo de formularios */
+form {
+    max-width: 400px; /* Cambiar el ancho máximo para hacer los formularios más pequeños */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 15px;
+    background: #1a1a2e; /* Fondo oscuro */
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #fff; /* Color del texto blanco */
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+input[type="number"] {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
-    border: 1px solid #dad0ce;
+    border: 1px solid #495057;
     border-radius: 5px;
     box-sizing: border-box;
-    font-size: 16px;
-    color: #495057;
-    background-color: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    color: #fff;
+    background-color: #0f3460;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-form input[type="text"]:focus,
-form input[type="email"]:focus,
-form textarea:focus,
-form input[type="number"]:focus {
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder,
+input[type="number"]::placeholder {
+    color: #aaa;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+input[type="number"]:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    border-color: #6d87fc;
+    box-shadow: 0 0 5px rgba(109, 135, 252, 0.5);
+    transform: translateY(-2px);
 }
 
-/* Specific section styles */
-#tablesArea div,
-#clientsArea div,
-#invoiceArea div {
-    padding: 10px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    background-color: #fff;
-    color: #495057;
+textarea {
+    resize: vertical;
+    min-height: 80px;
 }
 
-#orderItemsContainer > div {
-    margin-bottom: 10px;
+/* Separadores estéticos */
+.separator {
+    height: 1px;
+    background: #dee2e6;
+    margin: 20px 0;
+    position: relative;
+}
+
+.separator::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 5px;
+    background: #6d87fc;
+    border-radius: 5px;
+}
+#calculateTipSection h2 {
+    color: #ffffff; /* Cambiar el color del título a blanco */
+    text-align: center; /* Centrar el texto */
+}
+#processPaymentSection h2 {
+    color: #ffffff; /* Cambiar el color del título a blanco */
+    text-align: center; /* Centrar el texto */
+}
+#takeOrderSection h2 {
+    color: #ffffff; /* Cambiar el color del título a blanco */
+    text-align: center; /* Centrar el texto */
+}
+
+#takeOrderSection h2 {
+    color: #f8f9fa; /* Color del texto del título */
+    text-align: center; /* Alinea el texto al centro */
+}
+
+#registerClientInfoSection h2 {
+    color: #fff; /* Cambia el color del texto del título a blanco */
+    text-align: center; /* Alinea el texto al centro */
+}
+#generateInvoiceSection h2 {
+    color: #ffffff; /* Cambiar el color del título a blanco */
+    text-align: center; /* Centrar el texto */
 }
