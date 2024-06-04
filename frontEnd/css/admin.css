@@ -3,7 +3,7 @@ body {
     font-family: "Sans-Serif Font";
     margin: 0;
     padding: 0;
-    background-color: #f2f2f2;
+    background-color: #061323; /* Color de fondo similar al de la imagen */
     overflow-x: hidden; /* Evitar desbordamiento horizontal */
     background-image: url('../images/fondoAdmin.jpg'); /* Añadir la imagen de fondo */
     background-size: cover; /* Ajustar el tamaño de la imagen para cubrir todo el área */
@@ -32,7 +32,7 @@ body {
 }
 
 .navbar button {
-    background-color: #6d87fc;
+    background-color: #6d87fc; /* Color de los botones */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -92,6 +92,7 @@ body {
 .sidebar a:hover {
     background-color: #061323;
 }
+
 .sidebar img {
     display: block; /* Asegurar que la imagen sea un elemento de bloque */
     margin: 0 auto; /* Centrar horizontalmente la imagen */
@@ -99,6 +100,7 @@ body {
     height: auto; /* Permitir que la altura se ajuste automáticamente para mantener la proporción */
     padding: 20px 0; /* Agregar un espacio alrededor de la imagen para separarla de los elementos de la lista */
 }
+
 /* Main Content */
 main {
     margin-left: 250px;
@@ -128,18 +130,23 @@ section {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: #fefefe;
+    background-color: #061323; /* Fondo similar al de la imagen */
     margin: 20px; /* Espacio entre secciones */
     position: relative;
+    max-width: 400px; /* Reducir el ancho máximo */
+    width: 100%;
+    text-align: center; /* Centrar el contenido del formulario */
 }
 
 section h2 {
     margin-top: 0;
+    color: #fff; /* Color del texto */
 }
 
 section label {
     display: block;
     margin-bottom: 10px;
+    color: #fff; /* Color del texto */
 }
 
 section input[type="text"],
@@ -152,10 +159,12 @@ section select {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    background-color: #003366; /* Color de fondo de los campos de entrada */
+    color: #fff; /* Color del texto */
 }
 
 section button {
-    background-color: #6d87fc;
+    background-color: #6d87fc; /* Color del botón */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -167,7 +176,7 @@ section button {
 }
 
 section button:hover {
-    background-color: #061323;
+    background-color: #003366; /* Color del botón al pasar el cursor */
 }
 
 .close {
@@ -213,9 +222,10 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
 /* Estilo del contenedor principal */
 #manageTablesSection {
-    max-width: 800px;
+    max-width: 400px; /* Reducir el ancho máximo */
     width: 100%;
     margin: 20px auto; /* Centrar horizontalmente */
     background: #dd6a1e; /* Color de fondo modificado */
@@ -268,20 +278,27 @@ button.alt:hover {
 }
 
 /* Estilo de formularios */
+/* Centrar formularios */
 form {
-    margin: 20px 0;
-    padding: 20px;
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
-    background: #f8f9fa;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto; /* Centrar horizontalmente */
 }
 
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto; /* Centrar horizontalmente */
+}
 label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: #495057;
+    color: #fff; /* Color del texto */
     margin-top: 15px; /* Espaciado adicional entre campos */
 }
 
@@ -296,17 +313,17 @@ input[type="number"] {
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
-    color: #495057;
-    background-color: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #fff; /* Color del texto */
+    background-color: #003366; /* Color de fondo de los campos de entrada */
+    transition: border-color 0.3s;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 textarea:focus,
 input[type="number"]:focus {
-    outline: none;
     border-color: #007bff;
+    outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
@@ -340,4 +357,8 @@ textarea {
 /* Espaciado adicional para formularios */
 form > *:not(label) {
     margin-top: 10px;
+}
+/* Estilo específico para el encabezado h3 en el formulario Crear Usuario */
+h3 {
+    color: white;
 }
