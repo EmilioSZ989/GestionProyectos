@@ -381,3 +381,9 @@ textarea {
     color: #ffffff; /* Cambiar el color del título a blanco */
     text-align: center; /* Centrar el texto */
 }
+h3 {
+    color: white;
+}
+#orderItemsContainer {
+    color: white;
+}
