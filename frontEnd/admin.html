@@ -20,11 +20,11 @@
     <div class="sidebar">
         <h2>Menú de Administrador</h2>
         <ul>
-            <li><a href="#" id="modifyVATBtn">Modificar IVA</a></li>
-            <li><a href="#" id="generateReportBtn">Generar Reporte de Ventas</a></li>
-            <li><a href="#" id="manageUsersBtn">Gestionar Usuarios</a></li>
-            <li><a href="#" id="manageMenuBtn">Gestionar Menú</a></li>
-            <li><a href="mesero.html">Ir a la página del Mesero</a></li> <!-- Botón agregado -->
+            <li><a href="#" data-section="modifyVATSection">Modificar IVA</a></li>
+            <li><a href="#" data-section="generateReportSection">Generar Reporte de Ventas</a></li>
+            <li><a href="#" data-section="manageUsersSection">Gestionar Usuarios</a></li>
+            <li><a href="#" data-section="manageMenuSection">Gestionar Menú</a></li>
+            <li><a href="mesero.html">Ir a la página del Mesero</a></li>
             <img src="/images/logoAdmin.png">
         </ul>
     </div>
@@ -41,7 +41,7 @@
             </form>
         </section>
         
-       <!-- Sección para generar reporte de ventas -->
+        <!-- Sección para generar reporte de ventas -->
         <section id="generateReportSection" class="hidden">
             <h2>Generar Reporte de Ventas</h2>
             <form id="generateReportForm">
@@ -70,7 +70,6 @@
             </div>
         </section>
 
-        
         <section id="manageUsersSection" class="hidden">
             <h2>Gestionar Usuarios</h2>
             <button id="getAllUsersBtn">Obtener Todos los Usuarios</button>
@@ -94,7 +93,7 @@
             <form id="editUserForm">
                 <h3>Editar Usuario</h3>
                 <label for="editUserId">Seleccionar Usuario:</label>
-                <select id="editUserId" name="userId" required>
+                <select id="editUserId" class="userSelect" name="userId" required>
                     <!-- Opciones de usuario se agregarán dinámicamente aquí -->
                 </select>
                 <label for="editUserName">Nombre:</label>
@@ -115,7 +114,7 @@
             <form id="deleteUserForm">
                 <h3>Eliminar Usuario</h3>
                 <label for="deleteUserId">Seleccionar Usuario:</label>
-                <select id="deleteUserId" name="userId" required>
+                <select id="deleteUserId" class="userSelect" name="userId" required>
                     <!-- Opciones de usuario se agregarán dinámicamente aquí -->
                 </select>
                 <button type="submit">Eliminar Usuario</button>
@@ -124,11 +123,10 @@
 
         </section>
         
-        
         <section id="manageMenuSection" class="hidden">
             <h2>Gestionar Menú</h2>
             <button id="getAllMenuItemsBtn">Obtener Todos los Ítems del Menú</button>
-            
+        
             <!-- Formulario para crear ítems de menú -->
             <form id="createMenuItemForm">
                 <h3>Crear Ítem de Menú</h3>
@@ -140,29 +138,32 @@
                 <input type="number" id="createItemPrice" name="precio" required>
                 <label for="createItemCategory">Categoría:</label>
                 <select id="createItemCategory" name="categoria.idCategoria" required>
-                    <!-- Opciones de categoría generadas dinámicamente por JavaScript -->
+                    <option value="1">Bebidas</option>
+                    <option value="2">Tipico</option>
+                    <option value="3">Parrila</option>
                 </select>
                 <button type="submit">Crear Ítem</button>
             </form>
         
-            <!-- Formulario para editar ítems de menú -->
-            <form id="editMenuItemForm" class="hidden">
-                <h3>Editar Ítem de Menú</h3>
+<h3>Editar Ítem del Menú</h3>
+            <form id="editMenuItemForm">
                 <label for="editItemId">ID del Ítem:</label>
-                <select id="editItemId" name="id" required>
-                    <!-- Opciones de ID de ítem generadas dinámicamente por JavaScript -->
+                <select id="editItemId" name="editItemId" class="itemSelect">
+                    <!-- Las opciones serán llenadas dinámicamente -->
                 </select>
-                <label for="editItemName">Nombre del Ítem:</label>
-                <input type="text" id="editItemName" name="nombreItem" required>
+                <label for="editItemName">Nombre:</label>
+                <input type="text" id="editItemName" name="editItemName">
                 <label for="editItemDescription">Descripción:</label>
-                <input type="text" id="editItemDescription" name="descripcion" required>
+                <input type="text" id="editItemDescription" name="editItemDescription">
                 <label for="editItemPrice">Precio:</label>
-                <input type="number" id="editItemPrice" name="precio" required>
+                <input type="number" id="editItemPrice" name="editItemPrice">
                 <label for="editItemCategory">Categoría:</label>
-                <select id="editItemCategory" name="categoria.idCategoria" required>
-                    <!-- Opciones de categoría generadas dinámicamente por JavaScript -->
+                <select id="editItemCategory" name="editItemCategory" class="itemSelect">
+                    <option value="1">Bebidas</option>
+                    <option value="2">Tipico</option>
+                    <option value="3">Parrila</option>
                 </select>
-                <button type="submit">Editar Ítem</button>
+                <button type="submit">Modificar</button>
             </form>
         
             <!-- Formulario para eliminar ítems de menú -->
@@ -180,15 +181,12 @@
                 <!-- Aquí se mostrarán los ítems del menú -->
             </div>
         </section>
-        
-        
-        
-            </main>
-            <!-- Footer -->
-<footer>
-    <p>&copy; Palogrande Restaurant</p>
-</footer>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Palogrande Restaurant</p>
+    </footer>
 
-<script src="js/admin.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 </html>

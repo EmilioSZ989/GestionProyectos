@@ -1,4 +1,4 @@
-package com.example.facturaPOS.model;
+	package com.example.facturaPOS.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

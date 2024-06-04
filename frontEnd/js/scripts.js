@@ -42,11 +42,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funcionalidad del formulario de inicio de sesión
     const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        
+
+        // Validación básica del formulario
+        if (!username || !password) {
+            displayError('Por favor, complete todos los campos.');
+            return;
+        }
+
         fetch('http://localhost:8080/auth/login', {
             method: 'POST',
             headers: {
@@ -55,24 +63,36 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({ correo: username, contrasena: password })
         })
         .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('Login failed');
+            if (!response.ok) {
+                if (response.status === 401) {
+                    throw new Error('Credenciales incorrectas. Intente nuevamente.');
+                } else {
+                    throw new Error('Error en el servidor. Por favor, inténtelo más tarde.');
+                }
             }
+            return response.json();
         })
         .then(data => {
             console.log('Login successful:', data);
+            loginModal.style.display = 'none'; // Cierra el modal
             if (data.tipoUsuario.tipoUsuario === 'Administrador') {
                 window.location.href = 'admin.html'; // Redireccionar a la página de administrador
             } else if (data.tipoUsuario.tipoUsuario === 'Mesero') {
                 window.location.href = 'mesero.html'; // Redireccionar a la página de mesero
             } else {
-                console.error('Unknown user type');
+                displayError('Tipo de usuario desconocido.');
             }
         })
-        .catch(error => console.error('Error during login:', error));
+        .catch(error => {
+            console.error('Error during login:', error);
+            displayError(error.message);
+        });
     });
+
+    function displayError(message) {
+        loginError.textContent = message;
+        loginError.style.display = 'block';
+    }
 
     // Funcionalidad de la galería de imágenes
     const imgGaleria = document.querySelectorAll('.img-galeria');
